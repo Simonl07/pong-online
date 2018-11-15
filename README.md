@@ -9,7 +9,6 @@ The project breaks down into the following modules:
 
 ## Graphics Engine:
 The graphics engine is used by game client and responsible for rendering the game component onto the screen, the engine is using java applet or java 2D graphics library.
-
 * - [ ] Research Java 2D graphics library
 * - [ ] Model/Component classes: Ball, Board, Game, Field, Prop, Items
 * - [ ] Time(s/ms)-based frame update instead of performance-based frame update(for client synchronization)
