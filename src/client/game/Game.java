@@ -1,4 +1,4 @@
-package physics;
+package client.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,16 +8,15 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class GameBoard extends JPanel implements Runnable {
+public class Game extends JPanel {
 
 	private Block p1;
 	private Ball b;
-	private Thread animator;
 	private int width;
 	private int height;
 	private int exitrounds;
 
-	public GameBoard(int width, int height) {
+	public Game(int width, int height) {
 		this.p1 = new Block();
 		this.b = new Ball(150, 30, 5);
 		this.width = width;
@@ -36,9 +35,6 @@ public class GameBoard extends JPanel implements Runnable {
 	@Override
 	public void addNotify() {
 		super.addNotify();
-
-		animator = new Thread(this);
-		animator.start();
 	}
 
 	@Override
@@ -73,17 +69,7 @@ public class GameBoard extends JPanel implements Runnable {
 		}
 	}
 
-	@Override
-	public void run() {
-		while (true) {
-			// System.out.println(this.p1.getVector());
-			physics();
-			repaint();
-		}
-	}
-
-	private void physics() {
-
+	public void physics() {
 		// System.out.println(b.getX() + " " + b.getY());
 		if (!checkWall()) {
 			if (exitrounds == 0 && this.b.getBounds().intersects(p1.getBounds()) && this.b.getVector().getDx() < 0) {

@@ -1,34 +1,40 @@
-package graphics;
+package client;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import physics.GameBoard;
+import client.game.Game;
+import client.graphics.RenderThread;
 
 @SuppressWarnings("serial")
-public class Renderer extends JFrame {
+public class Client extends JFrame {
 
-	public Renderer() {
+	private RenderThread rt;
+	
+	public Client() {
 		initUI();
 	}
 
 	private void initUI() {
 
-		add(new GameBoard(800, 600));
+		Game g = new Game(1200, 600);
+		add(g);
 
 		setTitle("Client");
-		setSize(800, 620);
+		setSize(1200, 620);
 
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.rt = new RenderThread(g);
+		this.rt.start();
 	}
 
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(() -> {
-			Renderer ex = new Renderer();
+			Client ex = new Client();
 			ex.setVisible(true);
 		});
 	}

@@ -1,4 +1,4 @@
-package physics;
+package client.game;
 
 import java.awt.Rectangle;
 

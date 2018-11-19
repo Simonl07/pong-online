@@ -1,4 +1,4 @@
-package physics;
+package client.game;
 
 public class Vector {
 	private double dx;
