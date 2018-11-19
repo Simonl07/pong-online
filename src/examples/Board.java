@@ -12,6 +12,12 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * Examples of Java 2D Graphics taken from
+ * http://zetcode.com/tutorials/javagamestutorial/movingsprites/
+ * 
+ * @author ZetCode
+ */
 @SuppressWarnings("serial")
 public class Board extends JPanel implements ActionListener {
 

@@ -2,6 +2,12 @@ package examples;
 
 import java.awt.event.KeyEvent;
 
+/**
+ * Examples of Java 2D Graphics taken from
+ * http://zetcode.com/tutorials/javagamestutorial/movingsprites/
+ * 
+ * @author ZetCode
+ */
 public class Block {
 
 	private int dx;
@@ -59,7 +65,7 @@ public class Block {
 
 		if (key == KeyEvent.VK_S) {
 			dy = 2;
-			
+
 		}
 	}
 

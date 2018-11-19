@@ -1,7 +1,20 @@
 package examples;
-import java.awt.*; 
-import java.awt.event.*; 
-import javax.swing.*; 
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel; 
+
+/**
+ * Examples of Mouse Event handling taken from 
+ * https://www.geeksforgeeks.org/mouselistener-mousemotionlistener-java/
+ * @author andrew1234 @ geeksforgeeks.org
+ *
+ */
+@SuppressWarnings("serial")
 class Mouse extends Frame implements MouseMotionListener { 
   
     // Jlabels to display the actions of events of MouseMotionListener 
@@ -47,8 +60,7 @@ class Mouse extends Frame implements MouseMotionListener {
   
         // add panel to the frame 
         f.add(p); 
-  
-        f.show(); 
+ 
     } 
   
     // getX() and getY() functions return the 
