@@ -13,7 +13,7 @@ public class GameBoard extends JPanel implements Runnable {
 
 	private Block p1;
 	private Ball b;
-	private final int DELAY = 2;
+	private final int DELAY = 1;
 	private Thread animator;
 	private int width;
 	private int height;
@@ -30,9 +30,9 @@ public class GameBoard extends JPanel implements Runnable {
 	private void initBoard() {
 
 		this.addMouseMotionListener(new Mouse());
-		setBackground(Color.white);
-		this.b.getVector().setDx(0.2);
-		this.b.getVector().setDy(0.2);
+		setBackground(Color.black);
+		this.b.getVector().setDx(0.25);
+		this.b.getVector().setDy(0.25);
 	}
 
 	@Override
@@ -52,11 +52,13 @@ public class GameBoard extends JPanel implements Runnable {
 	}
 
 	private void paintBall(Graphics g) {
-		g.drawOval(this.b.getX(), this.b.getY(), this.b.getR() * 2, this.b.getR() * 2);
+		g.setColor(Color.white);
+		g.fillOval(this.b.getX(), this.b.getY(), this.b.getR() * 2, this.b.getR() * 2);
 	}
 
 	private void paintP1Block(Graphics g) {
-		g.drawRect(this.p1.getX(), this.p1.getY(), this.p1.getWidth(), this.p1.getHeight());
+		g.setColor(Color.white);
+		g.fillRect(this.p1.getX(), this.p1.getY(), this.p1.getWidth(), this.p1.getHeight());
 	}
 
 	private class Mouse implements MouseMotionListener {
@@ -80,7 +82,7 @@ public class GameBoard extends JPanel implements Runnable {
 		beforeTime = System.currentTimeMillis();
 
 		while (true) {
-			System.out.println(this.p1.getVector());
+//			System.out.println(this.p1.getVector());
 			physics();
 			repaint();
 
@@ -105,12 +107,17 @@ public class GameBoard extends JPanel implements Runnable {
 	}
 
 	private void physics() {
-//		System.out.println(b.getVector());
+
 //		System.out.println(b.getX() + " " + b.getY());
 		if (!checkWall()) {
 			if (exitrounds == 0 && this.b.getBounds().intersects(p1.getBounds()) && this.b.getVector().getDx() < 0) {
+				System.out.println("Ball: " + b.getVector());
+				System.out.println("P1 Block: " + p1.getVector());
 				this.b.getVector().setDx(Math.abs(this.b.getVector().getDx()));
 				this.b.getVector().add(this.p1.getVector());
+				
+				System.out.println("Ball: " + b.getVector());
+				System.out.println("P1 Block:" + p1.getVector());
 				this.exitrounds = 2;
 			}
 			if (exitrounds != 0) {

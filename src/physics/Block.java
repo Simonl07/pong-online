@@ -14,7 +14,7 @@ public class Block implements Collidable {
 	private int y;
 	private int w;
 	private int h;
-	private int prevY;
+	private double py;
 
 	public Block() {
 		this(DEFAULT_START_X, DEFAULT_START_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -25,6 +25,7 @@ public class Block implements Collidable {
 		this.y = y;
 		this.w = w;
 		this.h = h;
+		this.py = 0;
 	}
 
 	public int getX() {
@@ -48,7 +49,7 @@ public class Block implements Collidable {
 	}
 
 	public void update(MouseEvent e) {
-		this.prevY = this.y;
+		this.py = this.y;
 		this.y = e.getY() - this.h / 2;
 	}
 
@@ -59,12 +60,15 @@ public class Block implements Collidable {
 
 	@Override
 	public Vector getVector() {
-		double diff = (this.y - this.prevY) / 5;
-		System.out.println("y" + this.y + " prevY" + this.prevY + "  " + diff);
-		if(Math.abs(diff) < Block.MAX_DY){
-			return new Vector(0.0, diff);
+		double diff = this.y - this.py;
+		int sign = (int)(diff / Math.abs(diff));
+		diff /= 30;
+		double dy = Math.log(Math.abs(diff) + 1) * 0.3;
+		
+		if (Math.abs(dy) < Block.MAX_DY) {
+			return new Vector(0.0, sign * dy);
 		}
-		return new Vector(0.0, (diff / Math.abs(diff)) * Block.MAX_DY);
+		return new Vector(0.0, sign * Block.MAX_DY);
 	}
 
 	@Override
