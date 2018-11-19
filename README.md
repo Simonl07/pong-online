@@ -32,7 +32,7 @@ Both game client & server contains modules designed for match making. The module
 Both game client & server contains modules for in-game communication. These communication includes:
 
 * - [ ] Rebounce Reports: new bounce vector report from client - Zero
-* - [ ] Board Position Reports: current board position from client, necessary for real time opponent board rendering - Zero: Server
+* - [ ] Board Position Reports: current board position from client, necessary for real time opponent board rendering - Zero
 * - [ ] Round End Reports: reports that the ball entered current players side and represents that the current player lose the round, send from client - Zero
 * - [ ] New Round: signals a new round with initial conditions and scores. Send from server to clients. This also works for resumed sessions when a disconnected player reconnect - Zero
 
