@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -13,7 +12,6 @@ public class GameBoard extends JPanel implements Runnable {
 
 	private Block p1;
 	private Ball b;
-	private final int DELAY = 1;
 	private Thread animator;
 	private int width;
 	private int height;
@@ -24,11 +22,11 @@ public class GameBoard extends JPanel implements Runnable {
 		this.b = new Ball(150, 30, 5);
 		this.width = width;
 		this.height = height;
+		this.setDoubleBuffered(true);
 		initBoard();
 	}
 
 	private void initBoard() {
-
 		this.addMouseMotionListener(new Mouse());
 		setBackground(Color.black);
 		this.b.getVector().setDx(0.25);
@@ -45,6 +43,7 @@ public class GameBoard extends JPanel implements Runnable {
 
 	@Override
 	public void paintComponent(Graphics g) {
+
 		super.paintComponent(g);
 
 		paintP1Block(g);
@@ -76,46 +75,23 @@ public class GameBoard extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
-
-		long beforeTime, timeDiff, sleep;
-
-		beforeTime = System.currentTimeMillis();
-
 		while (true) {
-//			System.out.println(this.p1.getVector());
+			// System.out.println(this.p1.getVector());
 			physics();
 			repaint();
-
-			timeDiff = System.currentTimeMillis() - beforeTime;
-			sleep = DELAY - timeDiff;
-
-			if (sleep < 0) {
-				sleep = 2;
-			}
-
-			try {
-				Thread.sleep(sleep);
-			} catch (InterruptedException e) {
-
-				String msg = String.format("Thread interrupted: %s", e.getMessage());
-
-				JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);
-			}
-
-			beforeTime = System.currentTimeMillis();
 		}
 	}
 
 	private void physics() {
 
-//		System.out.println(b.getX() + " " + b.getY());
+		// System.out.println(b.getX() + " " + b.getY());
 		if (!checkWall()) {
 			if (exitrounds == 0 && this.b.getBounds().intersects(p1.getBounds()) && this.b.getVector().getDx() < 0) {
 				System.out.println("Ball: " + b.getVector());
 				System.out.println("P1 Block: " + p1.getVector());
 				this.b.getVector().setDx(Math.abs(this.b.getVector().getDx()));
 				this.b.getVector().add(this.p1.getVector());
-				
+
 				System.out.println("Ball: " + b.getVector());
 				System.out.println("P1 Block:" + p1.getVector());
 				this.exitrounds = 2;
