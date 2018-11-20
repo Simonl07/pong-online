@@ -5,30 +5,28 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 import client.game.Game;
-import client.graphics.RenderThread;
+import client.graphics.GraphicsEngine;
+import client.physics.PhysicsEngine;
 
 @SuppressWarnings("serial")
 public class Client extends JFrame {
 
-	private RenderThread rt;
-	
 	public Client() {
 		initUI();
 	}
 
 	private void initUI() {
-
 		Game g = new Game(1200, 600);
-		add(g);
+		new PhysicsEngine(g);
+		GraphicsEngine graphicsEngine = new GraphicsEngine(g);
 
-		setTitle("Client");
-		setSize(1200, 620);
+		this.add(graphicsEngine.getGraphicsComponent());
+		this.setTitle("pong-client");
+		this.setSize(1200, 620);
 
-		setLocationRelativeTo(null);
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.rt = new RenderThread(g);
-		this.rt.start();
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
