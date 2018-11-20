@@ -68,11 +68,6 @@ public class Ball implements Collidable {
 	}
 
 	@Override
-	public void collideWith(Collidable c) {
-		this.vector.add(c.getVector());
-	}
-
-	@Override
 	public Vector getVector() {
 		return this.vector;
 	}

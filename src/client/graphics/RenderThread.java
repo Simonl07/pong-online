@@ -12,6 +12,12 @@ public class RenderThread extends Thread {
 	public void run() {
 		while (true) {
 			g.repaint();
+			try {
+				Thread.sleep(16);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

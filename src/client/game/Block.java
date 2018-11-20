@@ -3,18 +3,20 @@ package client.game;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
+import client.util.AverageRateOfChangeQueue;
+
 public class Block implements Collidable {
 
 	private static int DEFAULT_START_X = 10;
 	private static int DEFAULT_START_Y = 100;
 	private static int DEFAULT_WIDTH = 20;
 	private static int DEFAULT_HEIGHT = 120;
-	private static final double MAX_DY = 0.2;
+	private static final double MAX_DY = 0.1;
 	private int x;
 	private int y;
 	private int w;
 	private int h;
-	private double py;
+	private AverageRateOfChangeQueue<Integer> arocq;
 
 	public Block() {
 		this(DEFAULT_START_X, DEFAULT_START_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -25,7 +27,7 @@ public class Block implements Collidable {
 		this.y = y;
 		this.w = w;
 		this.h = h;
-		this.py = 0;
+		this.arocq = new AverageRateOfChangeQueue<>(3);
 	}
 
 	public int getX() {
@@ -49,8 +51,8 @@ public class Block implements Collidable {
 	}
 
 	public void update(MouseEvent e) {
-		this.py = this.y;
 		this.y = e.getY() - this.h / 2;
+		this.arocq.add(this.y);
 	}
 
 	@Override
@@ -68,19 +70,13 @@ public class Block implements Collidable {
 	 */
 	@Override
 	public Vector getVector() {
-		double diff = this.y - this.py;
-		int sign = (int) (diff / Math.abs(diff));
-		diff /= 30;
-		double dy = Math.log(Math.abs(diff) + 1) * 0.3;
+		double speed = this.arocq.getValueROC(100);
+		int sign = (int) (speed / Math.abs(speed));
+		double dy = Math.log(Math.abs(speed) + 1) * 0.2 * sign;
 
 		if (Math.abs(dy) < Block.MAX_DY) {
 			return new Vector(0.0, sign * dy);
 		}
 		return new Vector(0.0, sign * Block.MAX_DY);
-	}
-
-	@Override
-	public void collideWith(Collidable c) {
-		// Nothing
 	}
 }

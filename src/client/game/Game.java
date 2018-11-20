@@ -8,13 +8,20 @@ public class Game {
 	private Ball ball;
 	private int width;
 	private int height;
-	private int exitrounds;
+	private int scoreP1;
+	private int scoreP2;
+	private int pps;
+	private int fps;
 
 	public Game(int width, int height) {
 		this.p1 = new Block();
 		this.ball = new Ball(150, 30, 5);
 		this.width = width;
 		this.height = height;
+		this.scoreP1 = 0;
+		this.scoreP2 = 0;
+		this.pps = 0;
+		this.fps = 0;
 		initBoard();
 	}
 
@@ -52,13 +59,6 @@ public class Game {
 	}
 
 	/**
-	 * @return the exitrounds
-	 */
-	public int getExitrounds() {
-		return exitrounds;
-	}
-
-	/**
 	 * @param width the width to set
 	 */
 	public void setWidth(int width) {
@@ -70,6 +70,62 @@ public class Game {
 	 */
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	/**
+	 * @return the scoreP1
+	 */
+	public int getScoreP1() {
+		return scoreP1;
+	}
+
+	/**
+	 * @return the scoreP2
+	 */
+	public int getScoreP2() {
+		return scoreP2;
+	}
+
+	/**
+	 * @param scoreP1 the scoreP1 to set
+	 */
+	public void setScoreP1(int scoreP1) {
+		this.scoreP1 = scoreP1;
+	}
+
+	/**
+	 * @param scoreP2 the scoreP2 to set
+	 */
+	public void setScoreP2(int scoreP2) {
+		this.scoreP2 = scoreP2;
+	}
+
+	/**
+	 * @return the pps
+	 */
+	public int getPps() {
+		return pps;
+	}
+
+	/**
+	 * @return the fps
+	 */
+	public int getFps() {
+		return fps;
+	}
+
+	/**
+	 * @param pps the pps to set
+	 */
+	public void setPps(int pps) {
+		this.pps = pps;
+	}
+
+	/**
+	 * @param fps the fps to set
+	 */
+	public void setFps(int fps) {
+		this.fps = fps;
 	}
 
 	public void updateMouse(MouseEvent e) {
