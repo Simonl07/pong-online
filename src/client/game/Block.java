@@ -11,7 +11,7 @@ public class Block implements Collidable {
 	private static int DEFAULT_START_Y = 100;
 	private static int DEFAULT_WIDTH = 20;
 	private static int DEFAULT_HEIGHT = 120;
-	private static final double MAX_DY = 0.1;
+	private static final double MAX_DY = 0.2;
 	private int x;
 	private int y;
 	private int w;
@@ -75,7 +75,7 @@ public class Block implements Collidable {
 		double dy = Math.log(Math.abs(speed) + 1) * 0.2 * sign;
 
 		if (Math.abs(dy) < Block.MAX_DY) {
-			return new Vector(0.0, sign * dy);
+			return new Vector(0.0, dy);
 		}
 		return new Vector(0.0, sign * Block.MAX_DY);
 	}

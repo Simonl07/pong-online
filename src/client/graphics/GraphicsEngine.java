@@ -20,6 +20,7 @@ public class GraphicsEngine {
 	private RenderThread renderer;
 	private int gameWidth;
 	private int gameHeight;
+	private int targetFPS;
 	private static Font SCORE_FONT;
 	static {
 		try {
@@ -31,13 +32,14 @@ public class GraphicsEngine {
 		}
 	}
 
-	public GraphicsEngine(Game game, PhysicsEngine physicsEngine) {
+	public GraphicsEngine(Game game, PhysicsEngine physicsEngine, int targetFPS) {
 		this.game = game;
 		this.gameWidth = game.getWidth();
 		this.gameHeight = game.getHeight();
 		this.graphicsComponent = new GraphicsComponent(this.game, this);
 		this.physicsEngine = physicsEngine;
-		this.renderer = new RenderThread(this.graphicsComponent);
+		this.targetFPS = targetFPS;
+		this.renderer = new RenderThread(this.game, this.graphicsComponent, this.targetFPS);
 		this.renderer.start();
 	}
 
@@ -51,6 +53,7 @@ public class GraphicsEngine {
 		paintMidLine(g);
 		paintScore(g);
 		paintPPS(g);
+		paintFPS(g);
 	}
 
 	private void paintBall(Graphics g) {
@@ -85,8 +88,15 @@ public class GraphicsEngine {
 
 	private void paintPPS(Graphics g) {
 		Font prev = g.getFont();
-		g.setFont(GraphicsEngine.SCORE_FONT.deriveFont((float) 11.0));
-		g.drawString("physics/s: " + this.game.getPps() + " target: " + this.physicsEngine.getTargetPPS(), 2, 22);
+		g.setFont(GraphicsEngine.SCORE_FONT.deriveFont((float) 8.0));
+		g.drawString("target PHY/s: " + this.physicsEngine.getTargetPPS() + "  PHY/s: " + this.game.getPps(), 2, 17);
+		g.setFont(prev);
+	}
+	
+	private void paintFPS(Graphics g) {
+		Font prev = g.getFont();
+		g.setFont(GraphicsEngine.SCORE_FONT.deriveFont((float) 8.0));
+		g.drawString("target FPS: " + this.targetFPS +  "     FPS: " + this.game.getFps(), 2, 30);
 		g.setFont(prev);
 	}
 }

@@ -23,7 +23,7 @@ public class Client extends JFrame {
 	private void initUI() {
 		Game g = new Game(1200, 600);
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, 120);
-		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine);
+		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, 60);
 
 		this.add(graphicsEngine.getGraphicsComponent());
 		this.setTitle("pong-client");

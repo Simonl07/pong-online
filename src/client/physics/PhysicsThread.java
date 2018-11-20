@@ -11,11 +11,12 @@ public class PhysicsThread extends Thread {
 	private int exitRounds;
 	private long targetDelay;
 	private AverageRateOfChangeQueue<Integer> arocq;
+	private static final int MAXIMUM_PPS_SUPPORTED = 200;
 
 	public PhysicsThread(Game game, int targetPPS) {
 		this.game = game;
 		this.setPPS(targetPPS);
-		this.arocq = new AverageRateOfChangeQueue<>(500);
+		this.arocq = new AverageRateOfChangeQueue<>(MAXIMUM_PPS_SUPPORTED);
 	}
 
 	public void setPPS(int targetPPS) {
