@@ -58,13 +58,21 @@ public class Block implements Collidable {
 		return new Rectangle(this.x, this.y, this.w, this.h);
 	}
 
+	/**
+	 * block_vector = 0.3 * log(|deltaY / 30| + 1)
+	 * 
+	 * The logarithm causes diminishing dy as user acheive higher instantaneous
+	 * deltaY. The 0.3 is adjusted for optimal curve of acceration. The + 1
+	 * ensures all values are greater than 0. If at the end dy is greater than
+	 * maximum dy allowed for each block, max dy is returned instead
+	 */
 	@Override
 	public Vector getVector() {
 		double diff = this.y - this.py;
-		int sign = (int)(diff / Math.abs(diff));
+		int sign = (int) (diff / Math.abs(diff));
 		diff /= 30;
 		double dy = Math.log(Math.abs(diff) + 1) * 0.3;
-		
+
 		if (Math.abs(dy) < Block.MAX_DY) {
 			return new Vector(0.0, sign * dy);
 		}
