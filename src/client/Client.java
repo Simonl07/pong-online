@@ -35,16 +35,6 @@ public class Client extends JFrame {
 	}
 
 	public static void main(String[] args) {
-
-		try {
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/client/dash_digital-7.ttf")));
-		} catch (IOException | FontFormatException e) {
-			e.printStackTrace();
-		}
-		
-		
-
 		EventQueue.invokeLater(() -> {
 			Client ex = new Client();
 			ex.setVisible(true);
