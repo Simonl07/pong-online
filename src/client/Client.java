@@ -27,6 +27,7 @@ public class Client extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.validate();
 	}
 
 	public static void main(String[] args) {
