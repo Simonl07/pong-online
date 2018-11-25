@@ -1,17 +1,18 @@
-package server.matchmaking;
-
-public class Player {
-	private int id;
-	private String name;
-
-	public Player(int id, String name) {
-		this.id = id;
-		this.name = name;
-		
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-}
+//package server.matchmaking;
+//
+//public class Player {
+//	private String id;
+//
+//	public Player(String id) {
+//		this.id = id;		
+//	}
+//	
+//	public String getId() {
+//		return id;
+//	}
+//	
+//	public boolean equals(Player p) {
+//		return p.getId().equals(this.id);
+//	}
+//	
+//}
