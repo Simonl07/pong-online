@@ -3,6 +3,8 @@ package server;
 import java.io.IOException;
 import java.net.Socket;
 
+import com.google.gson.JsonObject;
+
 import server.matchmaking.MatchMaker;
 
 public class Processor implements Runnable {
@@ -29,40 +31,31 @@ public class Processor implements Runnable {
 	}
 
 	private void handle(Request request, Response response) {
-		String content = request.read();
-		String id = null;
-		MatchMaker match = MatchMaker.getInstance();
-		while (content != null) {
-			String[] contentPart = content.split(Module.SPLIT_REGEX);
-			switch (contentPart[0]) {
-			case Module.SET_ID:
-				if (id == null) {
-					id = contentPart[1];
-				}
-				break;
-			case Module.MATCH_BEGIN:
-				match.joinWaitList(id, response);
-				break;
-			case Module.MATCH_CANCEL:
-				match.cancelToPlay(id);
-				break;
-			case Module.GAME_START:
-				gameCommunicate(request, match.getCompetitorResponse(id));
-				break;
-			}
-			content = request.read();
-		}
-	}
-	
-	private void gameCommunicate(Request self, Response comp) {
-		String content = self.read();
-		while (content != null && !content.equals(Module.GAME_END)) {
-			comp.write(content);
-			// TODO 3 kinds of report and keep tracking in server
-			// TODO new rounds
-			
-			content = self.read();
-		}
+		// TODO
+//		JsonObject json = request.read();
+//		
+//		String id = null;
+//		MatchMaker match = MatchMaker.getInstance();
+//		while (content != null) {
+//			String[] contentPart = content.split(Module.SPLIT_REGEX);
+//			switch (contentPart[0]) {
+//			case Module.SET_ID:
+//				if (id == null) {
+//					id = contentPart[1];
+//				}
+//				break;
+//			case Module.MATCH_BEGIN:
+//				match.joinWaitList(id, response);
+//				break;
+//			case Module.MATCH_CANCEL:
+//				match.cancelToPlay(id);
+//				break;
+//			case Module.GAME_START:
+//				gameCommunicate(request, match.getCompetitorResponse(id));
+//				break;
+//			}
+//			content = request.read();
+//		}
 	}
 
 }

@@ -1,28 +1,28 @@
 package server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
+import com.google.gson.JsonObject;
 
 public class Request {
-	private InputStream input;
+	private BufferedReader reader;
 
-	public Request(InputStream input) {
-		this.input = input;
+	public Request(InputStream input) throws UnsupportedEncodingException {
+		this.reader = new BufferedReader(new InputStreamReader(input, Module.CHARSET));
 	}
 
-	public String read() {
+	public JsonObject read() {
 		try {
-			// read the length
-			int length = input.read();
-			if (length == -1) {
-				return null;
+			StringBuilder builder = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null && !Module.isEOT(line)) {
+				builder.append(line);
 			}
-
-			// read the message
-			byte[] bytes = new byte[length];
-			input.read(bytes);
-			String message = new String(bytes, Module.CHARSET);
-			return message;
+			return Module.toJsonObject(builder.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

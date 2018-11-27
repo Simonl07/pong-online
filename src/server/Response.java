@@ -3,6 +3,8 @@ package server;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import com.google.gson.JsonObject;
+
 public class Response {
 	private OutputStream output;
 	
@@ -10,13 +12,10 @@ public class Response {
 		this.output = output;
 	}
 	
-	public void write(String message) {
+	public void write(JsonObject json) {
 		try {
+			String message = Module.toString(json);
 			byte[] bytes = message.getBytes(Module.CHARSET);
-			// write the length
-			output.write(bytes.length);
-			
-			// write the message
 			output.write(bytes);
 			output.flush();
 		} catch (IOException e) {

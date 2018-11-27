@@ -1,22 +1,47 @@
 package server;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class Module {
 	public static final String CHARSET = "UTF-8";
+	public static final int PORT = 6666;
 	
-	public static final String SPLIT_REGEX = " ";// message split regex
+	private static final JsonParser parser = new JsonParser();
 	
-	// send by client
-	public static final String SET_ID = "SetId";
-	public static final String MATCH_BEGIN = "MatchBegin";
-	public static final String MATCH_CANCEL = "MatchCancel";
-	public static final String GAME_START = "GameStart";
-	public static final String GAME_END = "GameEnd";
+	public static final String END_OF_TRANSMIT = "EOT";
 	
-	// send by server
-	public static final String FIND_COMPETITOR = "FindCompetitor";
+	public static final String TYPE = "type";
+	public static final String TYPE_HELLO = "mm_client_hello";
+	public static final String TYPE_SERVER_START = "mm_server_start";
+	
+	public static final String TYPE_IG_CLIENT_REFLECT = "ig_client_reflect";
+	public static final String TYPE_IG_BLOCK = "ig_client_broadcast_blockpos";
+	public static final String TYPE_IG_END = "ig_client_end";
 	
 	public static String initGame() {
 		// TODO game information
 		return "";
 	}
+	
+	public static JsonObject toJsonObject(String s) {
+		if (s == null || s.trim().equals("") || isEOT(s)) {
+			return null;
+		}
+		return parser.parse(s).getAsJsonObject();
+	}
+	
+	public static String toString(JsonObject json) {
+		return json.toString();
+	}
+	
+	public static boolean isEOT(String line) {
+		return END_OF_TRANSMIT.equals(line);
+	}
+	
+	public static String getType(JsonObject json) {
+		return json.get(TYPE).getAsString();
+	}
+	
+	
 }
