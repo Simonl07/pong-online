@@ -70,14 +70,14 @@ EOT
 # In-game communications:
 ```json
 {
-    "type": "ig_server_broadcast"
+    "type": "ig_server_broadcast_opp",
     "opponent_board": {
         "y": 455
     },
 }
 EOT
 {
-    "type": "ig_client_reflect"
+    "type": "ig_client_reflect",
     "v": {
         "x": 40,
         "y": 120,
@@ -88,24 +88,46 @@ EOT
 }
 EOT
 {
-    "type": "ig_server_broadcast"
+    "type": "ig_server_broadcast_opp",
     "opponent_board": {
         "y": 459
     },
 }
 EOT
 {
-    "type": "ig_server_broadcast"
+    "type": "ig_server_broadcast_opp",
     "opponent_board": {
         "y": 401
     },
 }
 EOT
 {
-    "type": "ig_server_broadcast"
+    "type": "ig_server_broadcast_opp",
     "opponent_board": {
-        "y": 401
+        "y": 406
     },
+}
+EOT
+{
+    "type": "ig_server_broadcast_reflect",
+    "v": {
+        "x": 40,
+        "y": 120,
+        "dx": -4.6,
+        "dy": 2.6
+    },
+    "start": 1543999574,
+}
+EOT
+{
+    "type": "ig_client_end",
+    "v": {
+        "x": 40,
+        "y": 120,
+        "dx": -4.6,
+        "dy": 2.6
+    },
+    "start": 1543999574,
 }
 EOT
 
