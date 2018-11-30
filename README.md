@@ -73,11 +73,6 @@ EOT
 # In-game communications:
 ```json
 {
-    "type": "ig_server_broadcast_blockpos",
-    "y": 455
-}
-EOT
-{
     "type": "ig_client_reflect",
     "v": {
         "x": 40,
@@ -86,21 +81,6 @@ EOT
         "dy": 2.6
     },
     "start": 1543998574,
-}
-EOT
-{
-    "type": "ig_server_broadcast_blockpos",
-    "y": 459
-}
-EOT
-{
-    "type": "ig_client_broadcast_blockpos",
-    "y": 255
-}
-EOT
-{
-    "type": "ig_server_broadcast_blockpos",
-    "y": 401
 }
 EOT
 {
