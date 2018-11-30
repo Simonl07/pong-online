@@ -16,13 +16,13 @@ public class Client extends JFrame {
 	}
 
 	private void initUI() {
-		Game g = new Game(1200, 600);
+		Game g = new Game(1000, 600);
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, 60);
 
 		this.add(graphicsEngine.getGraphicsComponent());
 		this.setTitle("pong-client");
-		this.setSize(1200, 620);
+		this.setSize(1000, 620);
 
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);

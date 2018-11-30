@@ -16,10 +16,11 @@ public class Game {
 	private int gameStage;
 
 	public Game(int width, int height) {
-		this.p1 = new Block();
-		this.ball = new Ball(150, 30, 5);
 		this.width = width;
 		this.height = height;
+		this.p1 = new Block();
+		this.p2 = new Block(this.width - 30, 30);
+		this.ball = new Ball(150, 30, 5);
 		this.scoreP1 = 0;
 		this.scoreP2 = 0;
 		this.pps = 0;
@@ -28,8 +29,8 @@ public class Game {
 	}
 
 	private void initBoard() {
-		this.ball.getVector().setDx(0.25);
-		this.ball.getVector().setDy(0.25);
+		this.ball.getVector().setDx(0.3);
+		this.ball.getVector().setDy(0.3);
 	}
 
 	/**

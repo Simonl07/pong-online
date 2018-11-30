@@ -21,6 +21,10 @@ public class Block implements Collidable {
 	public Block() {
 		this(DEFAULT_START_X, DEFAULT_START_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
+	
+	public Block(int x, int y){
+		this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	}
 
 	public Block(int x, int y, int w, int h) {
 		this.x = x;
@@ -53,6 +57,15 @@ public class Block implements Collidable {
 	public void update(MouseEvent e) {
 		this.y = e.getY() - this.h / 2;
 		this.arocq.add(this.y);
+	}
+	
+	
+
+	/**
+	 * @param y the y to set
+	 */
+	public void setY(int y) {
+		this.y = y;
 	}
 
 	@Override
