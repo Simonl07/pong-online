@@ -49,6 +49,7 @@ public class GraphicsEngine {
 
 	public void paintGraphics(Graphics g) {
 		paintP1Block(g);
+		paintP2Block(g);
 		paintBall(g);
 		paintMidLine(g);
 		paintScore(g);
@@ -66,6 +67,12 @@ public class GraphicsEngine {
 		Block p1 = this.game.getP1();
 		g.setColor(Color.WHITE);
 		g.fillRect(p1.getX(), p1.getY(), p1.getWidth(), p1.getHeight());
+	}
+	
+	private void paintP2Block(Graphics g) {
+		Block p2 = this.game.getP2();
+		g.setColor(Color.WHITE);
+		g.fillRect(p2.getX(), p2.getY(), p2.getWidth(), p2.getHeight());
 	}
 
 	private void paintMidLine(Graphics g) {

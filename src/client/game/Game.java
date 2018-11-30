@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 public class Game {
 
 	private Block p1;
+	private Block p2;
 	private Ball ball;
 	private int width;
 	private int height;
@@ -12,6 +13,7 @@ public class Game {
 	private int scoreP2;
 	private int pps;
 	private int fps;
+	private int gameStage;
 
 	public Game(int width, int height) {
 		this.p1 = new Block();
@@ -127,8 +129,40 @@ public class Game {
 	public void setFps(int fps) {
 		this.fps = fps;
 	}
+	
+	
+
+	/**
+	 * @return the p2
+	 */
+	public Block getP2() {
+		return p2;
+	}
+
+	/**
+	 * @param p2 the p2 to set
+	 */
+	public void setP2(Block p2) {
+		this.p2 = p2;
+	}
+
+	/**
+	 * @return the gameStage
+	 */
+	public int getGameStage() {
+		return gameStage;
+	}
+
+	/**
+	 * @param gameStage the gameStage to set
+	 */
+	public void setGameStage(int gameStage) {
+		this.gameStage = gameStage;
+	}
 
 	public void updateMouse(MouseEvent e) {
 		this.p1.update(e);
 	}
+	
+	
 }
