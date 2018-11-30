@@ -53,6 +53,8 @@ If we have time, it would be ideal to add more interesting game play into the vi
 EOT
 {
   "type": "mm_server_start",
+  "opp_host": "123.456.789.001",
+  "opp_port": 8888,
   "session_id": 123456789,
   "iv": {
     "x": 40,
