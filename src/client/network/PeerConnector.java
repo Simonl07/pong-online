@@ -1,15 +1,14 @@
 package client.network;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import client.game.Game;
+import client.util.JsonSocketReader;
+import client.util.JsonSocketWriter;
 
 public class PeerConnector {
 
@@ -21,64 +20,63 @@ public class PeerConnector {
 	private Thread serverThread;
 	private Thread clientThread;
 	private volatile boolean shutdown;
-	final static String EOT = "EOT";
 
-	public PeerConnector(String remoteHost, int remotePort, int localPort) throws IOException {
+	public PeerConnector(Game game, String remoteHost, int remotePort, int localPort){
+		this.game = game;
 		this.remoteHost = remoteHost;
 		this.remotePort = remotePort;
 		this.localPort = localPort;
-		this.server = new ServerSocket(this.localPort);
+		try {
+			this.server = new ServerSocket(this.localPort);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.shutdown = false;
 		this.serverThread = new ServerThread();
 		this.serverThread.start();
+		this.clientThread = new ClientThread();
+		this.clientThread.start();
 	}
 
 	private class ServerThread extends Thread {
+
 		@Override
 		public void run() {
 			while (!shutdown) {
 				try {
 					Socket socket = server.accept();
-					listenSocket(socket);
+					JsonSocketReader listener = new JsonSocketReader(socket);
+					while (!shutdown) {
+						JsonObject json = listener.next();
+						if (json.has("type") && json.get("type").getAsString().equals("ig_client_broadcast_blockpos")) {
+							game.getP2().setY(json.get("y").getAsInt());
+						}
+					}
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
 			}
 		}
+	}
 
-		private void listenSocket(Socket socket) {
-			BufferedReader in = null;
+	private class ClientThread extends Thread {
+		@Override
+		public void run() {
 			try {
-				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				JsonSocketWriter writer = new JsonSocketWriter(new Socket(remoteHost, remotePort));
 				while (!shutdown) {
-					String message = readNextMessage(in);
-					JsonObject json = new JsonParser().parse(message).getAsJsonObject();
-					if (json.has("type") && json.get("type").getAsString().equals("ig_client_broadcast_blockpos")) {
-						int y = json.get("y").getAsInt();
-						System.out.println("update y to " + y);
-					}
+					JsonObject json = new JsonObject();
+					json.addProperty("type", "ig_client_broadcast_blockpos");
+					json.addProperty("y", game.getP1().getY());
+					writer.write(json);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 		}
-
-		private String readNextMessage(BufferedReader in) throws IOException {
-			String message = "";
-					
-			String line = in.readLine();
-			while (line != null && !line.trim().equals(EOT)) {
-				message += line + "\n";
-				line = in.readLine();
-			}
-			return message;
-		}
-	}
-
-	private class ClientThread extends Thread {
-
 	}
 
 }
