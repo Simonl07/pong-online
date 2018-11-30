@@ -63,6 +63,7 @@ EOT
   "start": 1543278574,
   "score1": 0,
   "score2": 0
+  "you": "left"
 }
 EOT
 ```
