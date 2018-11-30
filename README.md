@@ -50,9 +50,9 @@ If we have time, it would be ideal to add more interesting game play into the vi
 {
   "type": "mm_client_hello"
 }
-EOF
+EOT
 {
-  "type": "mm_server_confirm",
+  "type": "mm_server_start",
   "session_id": 123456789,
   "iv": {
     "x": 40,
@@ -64,6 +64,58 @@ EOF
   "score1": 0,
   "score2": 0
 }
+EOT
+```
+
+# In-game communications:
+```json
+{
+    "type": "ig_server_broadcast_blockpos",
+    "y": 455
+}
+EOT
+{
+    "type": "ig_client_reflect",
+    "v": {
+        "x": 40,
+        "y": 120,
+        "dx": -4.6,
+        "dy": 2.6
+    },
+    "start": 1543998574,
+}
+EOT
+{
+    "type": "ig_server_broadcast_blockpos",
+    "y": 459
+}
+EOT
+{
+    "type": "ig_client_broadcast_blockpos",
+    "y": 255
+}
+EOT
+{
+    "type": "ig_server_broadcast_blockpos",
+    "y": 401
+}
+EOT
+{
+    "type": "ig_server_broadcast_reflect",
+    "v": {
+        "x": 40,
+        "y": 120,
+        "dx": -4.6,
+        "dy": 2.6
+    },
+    "start": 1543999574,
+}
+EOT
+{
+    "type": "ig_client_end",
+}
+EOT
+
 ```
 
 # Notes:
