@@ -5,6 +5,7 @@ import java.net.Socket;
 
 import com.google.gson.JsonObject;
 
+import client.util.JsonSocketReader;
 import client.util.JsonSocketWriter;
 
 public class GameProcessor implements Runnable {
@@ -23,10 +24,25 @@ public class GameProcessor implements Runnable {
 		JsonObject jsonRight = generateStartInfo(false);
 		new JsonSocketWriter(left.getSocket()).write(jsonLeft);
 		new JsonSocketWriter(left.getSocket()).write(jsonRight);
-		// TODO what's next? -- listen and update game info
+
+		JsonSocketReader listenerLeft = new JsonSocketReader(left.getSocket());
+		JsonSocketReader listenerRight = new JsonSocketReader(right.getSocket());
+		JsonObject json;
+		while ((json = listenerLeft.next()) != null) {// TODO add end game condition
+			handle(json);
+			json = listenerRight.next();
+			if (json == null) {
+				break;
+			}
+			handle(json);
+		}
 		// TODO end of game
 	}
 
+	private void handle(JsonObject json) {
+		// TODO switch depends on type
+	}
+	
 	private JsonObject generateStartInfo(boolean isLeft) {
 		JsonObject json = new JsonObject();
 		json.addProperty("type", "mm_server_start");
