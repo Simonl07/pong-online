@@ -14,7 +14,6 @@ public class PhysicsEngine {
 		this.physicsThread = new PhysicsThread(this.game, this.targetPPS);
 		this.physicsThread.start();
 	}
-
 	/**
 	 * @return the targetPPS
 	 */
@@ -28,5 +27,6 @@ public class PhysicsEngine {
 	public void setTargetPPS(int targetPPS) {
 		this.targetPPS = targetPPS;
 	}
+	
 
 }
