@@ -51,17 +51,17 @@ public class PhysicsThread extends Thread {
 
 	public void physics() {
 		Ball ball = this.game.getBall();
-		Block p1 = this.game.getP1();
+		Block me = this.game.getMe();
 
 		if (!checkWall(ball)) {
-			if (exitRounds == 0 && intersect(ball, p1) && ball.getVector().getDx() < 0) {
+			if (exitRounds == 0 && intersect(ball, me) && ball.getVector().getDx() < 0) {
 				System.out.println("Ball: " + ball.getVector());
-				System.out.println("P1 Block: " + p1.getVector());
+				System.out.println("P1 Block: " + me.getVector());
 				ball.getVector().setDx(Math.abs(ball.getVector().getDx()));
-				ball.getVector().add(p1.getVector());
+				ball.getVector().add(me.getVector());
 
 				System.out.println("Ball: " + ball.getVector());
-				System.out.println("P1 Block:" + p1.getVector());
+				System.out.println("P1 Block:" + me.getVector());
 				this.exitRounds = 2;
 			}
 			if (exitRounds != 0) {

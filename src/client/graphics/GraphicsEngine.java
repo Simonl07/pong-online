@@ -48,8 +48,8 @@ public class GraphicsEngine {
 	}
 
 	public void paintGraphics(Graphics g) {
-		paintP1Block(g);
-		paintP2Block(g);
+		paintMe(g);
+		paintOpp(g);
 		paintBall(g);
 		paintMidLine(g);
 		paintScore(g);
@@ -63,14 +63,14 @@ public class GraphicsEngine {
 		g.fillOval(ball.getX(), ball.getY(), ball.getR() * 2, ball.getR() * 2);
 	}
 
-	private void paintP1Block(Graphics g) {
-		Block p1 = this.game.getP1();
+	private void paintMe(Graphics g) {
+		Block p1 = this.game.getMe();
 		g.setColor(Color.WHITE);
 		g.fillRect(p1.getX(), p1.getY(), p1.getWidth(), p1.getHeight());
 	}
-	
-	private void paintP2Block(Graphics g) {
-		Block p2 = this.game.getP2();
+
+	private void paintOpp(Graphics g) {
+		Block p2 = this.game.getOpponent();
 		g.setColor(Color.WHITE);
 		g.fillRect(p2.getX(), p2.getY(), p2.getWidth(), p2.getHeight());
 	}
@@ -99,11 +99,11 @@ public class GraphicsEngine {
 		g.drawString("target PHY/s: " + this.physicsEngine.getTargetPPS() + "  PHY/s: " + this.game.getPps(), 2, 17);
 		g.setFont(prev);
 	}
-	
+
 	private void paintFPS(Graphics g) {
 		Font prev = g.getFont();
 		g.setFont(GraphicsEngine.SCORE_FONT.deriveFont((float) 8.0));
-		g.drawString("target FPS: " + this.targetFPS +  "     FPS: " + this.game.getFps(), 2, 30);
+		g.drawString("target FPS: " + this.targetFPS + "     FPS: " + this.game.getFps(), 2, 30);
 		g.setFont(prev);
 	}
 }
