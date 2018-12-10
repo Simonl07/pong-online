@@ -10,8 +10,7 @@ import server.matchmaking.MatchMaker;
 import utils.JsonSocketReader;
 
 public class Server {
-	// private static final int POOLSIZE = 10;// number of threads in thread
-	// pool in server
+	// private static final int POOLSIZE = 10;// thread pool size
 
 	private MatchMaker match;
 	private int port;
@@ -55,18 +54,14 @@ public class Server {
 	}
 	
 	private void handleRequest(JsonObject json, PlayerInfo player) {
-		if (!json.has("type")) {
-			// TODO mistake happen, throw exception or return null/false or ?
-			return;
-		}
-		String request = json.get("type").getAsString();
+		String request = json.get(Info.TYPE).getAsString();
 		switch(request) {
-		case "mm_client_hello":
+		case Info.MM_CLIENT_HELLO_TYPE:
 			// wait for match making
 			player.setPort(json.get("port").getAsInt());
 			match.join(player);
 			break;
-		case "mm_client_cancel":
+		case Info.MM_CLIENT_CANCEL_TYPE:
 			match.quit(player);
 			break;
 		// TODO more case: end of game, reconnect, ...
