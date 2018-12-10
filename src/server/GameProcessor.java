@@ -10,6 +10,7 @@ public class GameProcessor implements Runnable {
 	private long session_id;
 	private PlayerInfo left;
 	private PlayerInfo right;
+	private long startTime;
 
 	public GameProcessor(PlayerInfo left, PlayerInfo right) {
 		this.left = left;
@@ -22,6 +23,9 @@ public class GameProcessor implements Runnable {
 		// inform each other
 		JsonObject jsonLeft = generateStartInfo(true);
 		JsonObject jsonRight = generateStartInfo(false);
+		this.startTime = System.currentTimeMillis() + 5000;
+		jsonLeft.addProperty("start", startTime);
+		jsonRight.addProperty("start", startTime);
 		new JsonSocketWriter(left.getSocket()).write(jsonLeft);
 		new JsonSocketWriter(right.getSocket()).write(jsonRight);
 
@@ -76,6 +80,8 @@ public class GameProcessor implements Runnable {
 		return json;
 	}
 
+	
+	
 	private static void initGame(JsonObject json) {
 		// TODO generate game information
 		JsonObject iv = new JsonObject();
@@ -86,7 +92,6 @@ public class GameProcessor implements Runnable {
 
 		json.add("iv", iv);
 
-		json.addProperty("start", System.currentTimeMillis() + 5000);
 		json.addProperty("score1", 0);
 		json.addProperty("score2", 0);
 	}
