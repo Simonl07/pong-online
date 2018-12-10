@@ -49,7 +49,13 @@ public class NetworkEngine {
 		double dy = iv.get("dy").getAsDouble();
 		this.game.getBall().setX(x);
 		this.game.getBall().setY(y);
-		this.game.getBall().addVector(new Vector(dx, dy, gamestart.get("start").getAsLong()));
+		long sleep = gamestart.get("start").getAsLong() - System.currentTimeMillis();
+		try {
+			Thread.sleep(sleep);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.game.getBall().addVector(new Vector(dx, dy));
 
 		return null;
 	}
