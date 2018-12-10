@@ -22,7 +22,6 @@ public class JsonSocketWriter {
 	public void write(JsonObject json) {
 
 		String output = json.toString() + "\n" + EOT + "\n";
-		System.out.println(output);
 		this.writer.write(output);
 		this.writer.flush();
 		

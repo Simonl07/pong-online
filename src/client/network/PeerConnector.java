@@ -53,7 +53,7 @@ public class PeerConnector {
 					JsonSocketReader listener = new JsonSocketReader(socket);
 					while (!shutdown) {
 						JsonObject json = listener.next();
-						System.out.println(json);
+						// System.out.println(json);
 						if (json.has("type") && json.get("type").getAsString().equals("ig_client_broadcast_blockpos")) {
 							game.getOpponent().setY(json.get("y").getAsInt());
 						}
