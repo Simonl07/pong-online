@@ -21,6 +21,10 @@ public class PlayerInfo {
 		this.port = port;
 	}
 	
+	public void win() {
+		score++;
+	}
+	
 	public int getScore() {
 		return score;
 	}

@@ -11,6 +11,7 @@ import com.google.gson.JsonSyntaxException;
 
 public class JsonSocketReader {
 	final static String EOT = JsonSocketWriter.EOT;
+	private static final JsonParser parser = new JsonParser();
 	private BufferedReader reader;
 	
 	public JsonSocketReader(Socket socket){
@@ -24,7 +25,7 @@ public class JsonSocketReader {
 	
 	public JsonObject next(){
 		try {
-			return new JsonParser().parse(readNextMessage()).getAsJsonObject();
+			return parser.parse(readNextMessage()).getAsJsonObject();
 		} catch (JsonSyntaxException | IOException e) {
 			return null;
 		}
