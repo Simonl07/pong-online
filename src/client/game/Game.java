@@ -4,8 +4,8 @@ import java.awt.event.MouseEvent;
 
 public class Game {
 
-	private Block p1;
-	private Block p2;
+	private Block left;
+	private Block right;
 	private Ball ball;
 	private int width;
 	private int height;
@@ -18,9 +18,9 @@ public class Game {
 	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.p1 = new Block();
-		this.p2 = new Block(this.width - 30, 30);
-		this.ball = new Ball(150, 30, 5);
+		this.left = new Block(30);
+		this.right = new Block(this.width - Block.DEFAULT_WIDTH - 30);
+		this.ball = new Ball();
 		this.scoreP1 = 0;
 		this.scoreP2 = 0;
 		this.pps = 0;
@@ -37,7 +37,7 @@ public class Game {
 	 * @return the p1
 	 */
 	public Block getP1() {
-		return p1;
+		return left;
 	}
 
 	/**
@@ -137,14 +137,14 @@ public class Game {
 	 * @return the p2
 	 */
 	public Block getP2() {
-		return p2;
+		return right;
 	}
 
 	/**
 	 * @param p2 the p2 to set
 	 */
 	public void setP2(Block p2) {
-		this.p2 = p2;
+		this.right = p2;
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class Game {
 	}
 
 	public void updateMouse(MouseEvent e) {
-		this.p1.update(e);
+		this.left.update(e);
 	}
 	
 	

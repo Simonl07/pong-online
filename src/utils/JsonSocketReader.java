@@ -1,4 +1,4 @@
-package client.util;
+package utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,8 +10,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 public class JsonSocketReader {
-	
-	final static String EOT = "EOT";
+	final static String EOT = JsonSocketWriter.EOT;
 	private BufferedReader reader;
 	
 	public JsonSocketReader(Socket socket){

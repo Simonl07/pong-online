@@ -20,7 +20,6 @@ public class AverageRateOfChangeQueue<T extends Number> {
 	private LinkedList<Entry<Long, T>> queue;
 	private final int SIZE;
 
-
 	public AverageRateOfChangeQueue() {
 		this(3);
 	}

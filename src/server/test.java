@@ -8,8 +8,8 @@ import java.net.UnknownHostException;
 
 import com.google.gson.JsonObject;
 
-import client.util.JsonSocketReader;
-import client.util.JsonSocketWriter;
+import utils.JsonSocketReader;
+import utils.JsonSocketWriter;
 
 public class test {
 

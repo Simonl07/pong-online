@@ -7,8 +7,8 @@ import java.net.Socket;
 import com.google.gson.JsonObject;
 
 import client.game.Game;
-import client.util.JsonSocketReader;
-import client.util.JsonSocketWriter;
+import utils.JsonSocketReader;
+import utils.JsonSocketWriter;
 
 public class PeerConnector {
 

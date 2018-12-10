@@ -5,8 +5,8 @@ import java.net.Socket;
 
 import com.google.gson.JsonObject;
 
-import client.util.JsonSocketReader;
-import client.util.JsonSocketWriter;
+import utils.JsonSocketReader;
+import utils.JsonSocketWriter;
 
 public class GameProcessor implements Runnable {
 

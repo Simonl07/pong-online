@@ -8,8 +8,8 @@ import java.util.concurrent.Executors;
 
 import com.google.gson.JsonObject;
 
-import client.util.JsonSocketReader;
 import server.matchmaking.MatchMaker;
+import utils.JsonSocketReader;
 
 public class Server {
 	// private static final int POOLSIZE = 10;// number of threads in thread
