@@ -51,6 +51,8 @@ public class NetworkEngine {
 		this.game.getBall().setX(x + dx * delay);
 		this.game.getBall().setY(y + dy * delay);
 		this.game.getBall().addVector(new Vector(dx, dy));
+		
+		System.out.println(String.format("delay=%d, x=%f, y=%f", delay, x, y));
 		return null;
 	}
 }
