@@ -80,8 +80,8 @@ public class GameProcessor implements Runnable {
 		JsonObject iv = new JsonObject();
 		iv.addProperty("x", 40);
 		iv.addProperty("y", 120);
-		iv.addProperty("dx", -0.1);
-		iv.addProperty("dy", 0.1);
+		iv.addProperty("dx", -0.05);
+		iv.addProperty("dy", 0);
 
 		json.add("iv", iv);
 
