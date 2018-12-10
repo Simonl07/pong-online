@@ -6,6 +6,7 @@ public class Game {
 
 	private Block left;
 	private Block right;
+	private boolean isLeft;
 	private Ball ball;
 	private int width;
 	private int height;
@@ -13,7 +14,6 @@ public class Game {
 	private int scoreP2;
 	private int pps;
 	private int fps;
-	private int gameStage;
 
 	public Game(int width, int height) {
 		this.width = width;
@@ -29,15 +29,10 @@ public class Game {
 	}
 
 	private void initBoard() {
-		this.ball.getVector().setDx(0.3);
-		this.ball.getVector().setDy(0.3);
-	}
-
-	/**
-	 * @return the p1
-	 */
-	public Block getP1() {
-		return left;
+		this.ball.setX(this.width / 2);
+		this.ball.setY(30);
+		this.ball.getVector().setDx(0);
+		this.ball.getVector().setDy(0);
 	}
 
 	/**
@@ -130,40 +125,31 @@ public class Game {
 	public void setFps(int fps) {
 		this.fps = fps;
 	}
-	
-	
 
 	/**
-	 * @return the p2
+	 * @return the isLeft
 	 */
-	public Block getP2() {
-		return right;
+	public boolean isLeft() {
+		return isLeft;
 	}
 
 	/**
-	 * @param p2 the p2 to set
+	 * @param isLeft the isLeft to set
 	 */
-	public void setP2(Block p2) {
-		this.right = p2;
+	public void setLeft(boolean isLeft) {
+		this.isLeft = isLeft;
 	}
 
-	/**
-	 * @return the gameStage
-	 */
-	public int getGameStage() {
-		return gameStage;
+	public Block getMe() {
+		return this.isLeft ? this.left : this.right;
 	}
 
-	/**
-	 * @param gameStage the gameStage to set
-	 */
-	public void setGameStage(int gameStage) {
-		this.gameStage = gameStage;
+	public Block getOpponent() {
+		return this.isLeft ? this.right : this.left;
 	}
 
 	public void updateMouse(MouseEvent e) {
-		this.left.update(e);
+		this.getMe().update(e);
 	}
-	
-	
+
 }

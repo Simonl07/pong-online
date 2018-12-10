@@ -48,9 +48,17 @@ If we have time, it would be ideal to add more interesting game play into the vi
 
 ```json
 {
-  "type": "mm_client_hello"
+  "type": "mm_client_hello",
+  "port": 8881
 }
 EOT
+
+(possible client cancellation):
+{
+  "type": "mm_client_cancel"
+}
+EOT
+
 {
   "type": "mm_server_start",
   "opp_host": "123.456.789.001",
@@ -63,8 +71,8 @@ EOT
     "dy": 2.6
   },
   "start": 1543278574,
-  "score1": 0,
-  "score2": 0
+  "left": 0,
+  "right": 0,
   "you": "left"
 }
 EOT
@@ -95,10 +103,22 @@ EOT
 }
 EOT
 {
-    "type": "ig_client_end",
+    "type": "ig_client_end_round",
 }
 EOT
-
+{
+    "type": "ig_server_end_round",
+}
+EOT
+.
+(after many rounds of start -> reflects -> endround)
+.
+{
+    "type": "ig_server_end_game",
+    "left": 14,
+    "right": 11
+}
+EOT
 ```
 
 # Notes:

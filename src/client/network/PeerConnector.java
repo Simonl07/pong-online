@@ -15,25 +15,30 @@ public class PeerConnector {
 	private Game game;
 	private String remoteHost;
 	private int remotePort;
-	private int localPort;
 	private ServerSocket server;
 	private Thread serverThread;
 	private Thread clientThread;
 	private volatile boolean shutdown;
+	public static final int DEFAULT_LOCAL_PORT = 8765;
 
-	public PeerConnector(Game game, String remoteHost, int remotePort, int localPort){
+	public PeerConnector(Game game) {
 		this.game = game;
-		this.remoteHost = remoteHost;
-		this.remotePort = remotePort;
-		this.localPort = localPort;
+		this.shutdown = false;
+	}
+
+	public void startServer() {
 		try {
-			this.server = new ServerSocket(this.localPort);
+			this.server = new ServerSocket(DEFAULT_LOCAL_PORT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.shutdown = false;
 		this.serverThread = new ServerThread();
 		this.serverThread.start();
+	}
+
+	public void startClient(String remoteHost, int remotePort) {
+		this.remoteHost = remoteHost;
+		this.remotePort = remotePort;
 		this.clientThread = new ClientThread();
 		this.clientThread.start();
 	}
@@ -48,8 +53,9 @@ public class PeerConnector {
 					JsonSocketReader listener = new JsonSocketReader(socket);
 					while (!shutdown) {
 						JsonObject json = listener.next();
+						System.out.println(json);
 						if (json.has("type") && json.get("type").getAsString().equals("ig_client_broadcast_blockpos")) {
-							game.getP2().setY(json.get("y").getAsInt());
+							game.getOpponent().setY(json.get("y").getAsInt());
 						}
 					}
 
@@ -69,7 +75,7 @@ public class PeerConnector {
 				while (!shutdown) {
 					JsonObject json = new JsonObject();
 					json.addProperty("type", "ig_client_broadcast_blockpos");
-					json.addProperty("y", game.getP1().getY());
+					json.addProperty("y", game.getMe().getY());
 					writer.write(json);
 				}
 			} catch (IOException e) {
