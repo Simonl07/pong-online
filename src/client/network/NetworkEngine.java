@@ -30,10 +30,10 @@ public class NetworkEngine {
 		Socket socket = new Socket(GAME_SERVER_HOST, GAME_SERVER_PORT);
 		JsonSocketWriter writer = new JsonSocketWriter(socket);
 		JsonSocketReader reader = new JsonSocketReader(socket);
-
 		this.connector.startServer();
-		writer.write(JsonTemplates.MM_CLIENT_HELLO(PeerConnector.DEFAULT_LOCAL_PORT));
 
+		writer.write(JsonTemplates.MM_CLIENT_HELLO(PeerConnector.DEFAULT_LOCAL_PORT));
+		System.out.println("check");
 		JsonObject gamestart = reader.next();
 
 		this.game.setLeft(gamestart.get("you").getAsString().equals("left"));
@@ -41,7 +41,7 @@ public class NetworkEngine {
 		String oppHost = gamestart.get("opp_host").getAsString();
 		int oppPort = gamestart.get("opp_port").getAsInt();
 		this.connector.startClient(oppHost, oppPort);
-
+		
 		JsonObject iv = gamestart.get("iv").getAsJsonObject();
 		double x = iv.get("x").getAsDouble();
 		double y = iv.get("y").getAsDouble();

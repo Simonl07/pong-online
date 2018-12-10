@@ -29,7 +29,7 @@ public class Client extends JFrame {
 		Game g = new Game(1000, 600);
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, 60);
-		NetworkEngine networkEngine = new NetworkEngine(g, "serverhost", 0);
+		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.110.248", 8000);
 		try {
 			networkEngine.findMatch();
 		} catch (UnknownHostException e) {
