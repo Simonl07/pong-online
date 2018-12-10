@@ -55,6 +55,7 @@ public class Server {
 	
 	private void handleRequest(JsonObject json, PlayerInfo player) {
 		String request = json.get(Info.TYPE).getAsString();
+		System.out.println(json.toString());
 		switch(request) {
 		case Info.MM_CLIENT_HELLO_TYPE:
 			// wait for match making

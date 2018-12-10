@@ -29,7 +29,7 @@ public class Client extends JFrame {
 		Game g = new Game(1000, 600);
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, 60);
-		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.110.248", 8000);
+		NetworkEngine networkEngine = new NetworkEngine(g, "127.0.0.1", 8000);
 		try {
 			networkEngine.findMatch();
 		} catch (UnknownHostException e) {
@@ -51,7 +51,7 @@ public class Client extends JFrame {
 	}
 
 	public static void main(String[] args) {
-
+		
 		String remotehost = args[0];
 		int remotePort = Integer.parseInt(args[1]);
 		int localPort = Integer.parseInt(args[2]);

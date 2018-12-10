@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -25,7 +26,11 @@ public class JsonSocketReader {
 	
 	public JsonObject next(){
 		try {
-			return parser.parse(readNextMessage()).getAsJsonObject();
+			JsonElement json = parser.parse(readNextMessage());
+			if (json != null) {
+				return json.getAsJsonObject();
+			}
+			return null;
 		} catch (JsonSyntaxException | IOException e) {
 			return null;
 		}

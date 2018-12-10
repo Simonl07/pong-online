@@ -68,7 +68,7 @@ public class GameProcessor implements Runnable {
 		JsonObject json = new JsonObject();
 		json.addProperty(Info.TYPE, Info.MM_SERVER_START_TYPE);
 		json.addProperty(Info.OPP_HOST, isLeft ? right.getHost() : left.getHost());
-		json.addProperty(Info.OPP_HOST, isLeft ? right.getPort() : left.getPort());
+		json.addProperty(Info.OPP_PORT, isLeft ? right.getPort() : left.getPort());
 		json.addProperty(Info.SESSION_ID, this.session_id);
 		initGame(json);
 		json.addProperty(Info.YOU, isLeft ? Info.LEFT : Info.RIGHT);
@@ -80,8 +80,8 @@ public class GameProcessor implements Runnable {
 		JsonObject iv = new JsonObject();
 		iv.addProperty("x", 40);
 		iv.addProperty("y", 120);
-		iv.addProperty("dx", -4.6);
-		iv.addProperty("dy", 2.6);
+		iv.addProperty("dx", -0.1);
+		iv.addProperty("dy", 0.1);
 
 		json.add("iv", iv);
 
