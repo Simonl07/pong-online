@@ -48,7 +48,7 @@ public class GameProcessor implements Runnable {
 		json.addProperty("type", "mm_server_start");
 		json.addProperty("opp_host", isLeft ? right.getHost() : left.getHost());
 		json.addProperty("opp_port", isLeft ? right.getPort() : left.getPort());
-		json.addProperty("session_id", "");	// TODO get socket id
+		json.addProperty("session_id", "");	// TODO get session id
 		Module.initGame(json);
 		json.addProperty("you", isLeft ? "left" : "right");
 		

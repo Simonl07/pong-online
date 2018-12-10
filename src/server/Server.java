@@ -26,10 +26,16 @@ public class Server {
 	}
 
 	public void startup() {
-		try (ServerSocket serverSocket = new ServerSocket(port)) {
-			while (serverSocket != null && !shutdown) {
-				Socket socket = serverSocket.accept();
-
+		class Processor implements Runnable {
+			Socket socket;
+			Processor(Socket socket) {
+				this.socket = socket;
+			}
+			@Override
+			public void run() {
+				if (socket == null) {
+					return;
+				}
 				// generate player, start listening
 				PlayerInfo player = new PlayerInfo(socket);
 				JsonSocketReader listener = new JsonSocketReader(socket);
@@ -37,6 +43,12 @@ public class Server {
 				while (!shutdown && (json = listener.next()) != null) {// TODO add end game condition
 					handleRequest(json, player);
 				}
+			}
+		}
+		try (ServerSocket serverSocket = new ServerSocket(port)) {
+			while (serverSocket != null && !shutdown) {
+				Socket socket = serverSocket.accept();
+				new Thread(new Processor(socket)).start();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
