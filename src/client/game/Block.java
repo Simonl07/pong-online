@@ -7,11 +7,11 @@ import client.util.AverageRateOfChangeQueue;
 
 public class Block implements Collidable {
 
-	private static int DEFAULT_START_X = 10;
-	private static int DEFAULT_START_Y = 100;
-	private static int DEFAULT_WIDTH = 20;
-	private static int DEFAULT_HEIGHT = 120;
-	private static final double MAX_DY = 0.2;
+	public static final int DEFAULT_START_X = 10;
+	public static final int DEFAULT_START_Y = 10;
+	public static final int DEFAULT_WIDTH = 20;
+	public static final int DEFAULT_HEIGHT = 120;
+	public static final double MAX_DY = 0.2;
 	private int x;
 	private int y;
 	private int w;
@@ -22,8 +22,8 @@ public class Block implements Collidable {
 		this(DEFAULT_START_X, DEFAULT_START_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
-	public Block(int x, int y){
-		this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	public Block(int x){
+		this(x, DEFAULT_START_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 
 	public Block(int x, int y, int w, int h) {

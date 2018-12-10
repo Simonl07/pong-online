@@ -4,10 +4,15 @@ import java.awt.Rectangle;
 
 public class Ball implements Collidable {
 
+	public static final int DEFAULT_RADIUS = 10;
 	private double x;
 	private double y;
 	private int r;
 	private Vector vector;
+	
+	public Ball(){
+		this(0, 0, DEFAULT_RADIUS);
+	}
 
 	public Ball(int x, int y, int r) {
 		this.x = x;
