@@ -48,9 +48,17 @@ If we have time, it would be ideal to add more interesting game play into the vi
 
 ```json
 {
-  "type": "mm_client_hello"
+  "type": "mm_client_hello",
+  "port": 8881
 }
 EOT
+
+(possible client cancellation):
+{
+  "type": "mm_client_cancel"
+}
+EOT
+
 {
   "type": "mm_server_start",
   "opp_host": "123.456.789.001",
@@ -64,7 +72,7 @@ EOT
   },
   "start": 1543278574,
   "left": 0,
-  "right": 0
+  "right": 0,
   "you": "left"
 }
 EOT
