@@ -23,6 +23,7 @@ public class JsonSocketWriter {
 	public void write(JsonObject json) {
 		this.writer.write(json.toString());
 		this.writer.write(EOT);
+		this.writer.flush();
 	}
 	
 

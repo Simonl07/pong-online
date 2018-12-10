@@ -24,11 +24,13 @@ public class MatchMaker {
 		public void run() {
 			while (!shutdown) {
 				if (waitList.size() < 2) {
-					try {
-						waitList.wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					synchronized (waitList) {
+						try {
+							waitList.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				} else {
 					PlayerInfo left = waitList.poll();
@@ -47,11 +49,13 @@ public class MatchMaker {
 
 	}
 
-	public synchronized boolean join(PlayerInfo player) {
-		if (waitList.size() > 0) {
-			waitList.notifyAll();
+	public boolean join(PlayerInfo player) {
+		synchronized (waitList) {
+			if (waitList.size() > 0) {
+				waitList.notifyAll();
+			}
+			return waitList.offer(player);
 		}
-		return waitList.offer(player);
 	}
 
 }

@@ -40,6 +40,7 @@ public class JsonSocketReader {
 			message += line + "\n";
 			line = reader.readLine();
 		}
+		System.out.println(message);
 		return message;
 	}
 	
