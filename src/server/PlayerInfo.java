@@ -14,8 +14,11 @@ public class PlayerInfo {
 	public PlayerInfo(int score, Socket socket) {
 		this.score = score;
 		this.host = socket.getInetAddress().getHostAddress();
-		this.port = socket.getPort();
 		this.socket = socket;
+	}
+	
+	public void setPort(int port) {
+		this.port = port;
 	}
 	
 	public int getScore() {

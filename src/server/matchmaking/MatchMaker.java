@@ -43,10 +43,10 @@ public class MatchMaker {
 		}
 	}
 
-	// TODO adding synchronized
 	public boolean quit(PlayerInfo player) {
-		return waitList.remove(player);
-
+		synchronized (waitList) {
+			return waitList.remove(player);
+		}
 	}
 
 	public boolean join(PlayerInfo player) {

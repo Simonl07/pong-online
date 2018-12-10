@@ -65,9 +65,13 @@ public class Server {
 		switch(request) {
 		case "mm_client_hello":
 			// wait for match making
+			player.setPort(json.get("port").getAsInt());
 			match.join(player);
 			break;
-		// TODO more case: cancel waiting, end of game, reconnect, ...
+		case "mm_client_cancel":
+			match.quit(player);
+			break;
+		// TODO more case: end of game, reconnect, ...
 		}
 	}
 }

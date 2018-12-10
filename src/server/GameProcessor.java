@@ -31,10 +31,18 @@ public class GameProcessor implements Runnable {
 		JsonSocketReader listenerLeft = new JsonSocketReader(left.getSocket());
 		JsonSocketReader listenerRight = new JsonSocketReader(right.getSocket());
 		JsonObject json;
-		while ((json = listenerLeft.next()) != null) {// TODO add end game condition
+		while ((json = listenerLeft.next()) != null) {
+			String type = json.get("type").getAsString();
+			if (type.equals("ig_client_end")) {
+				break;
+			}
 			handle(json);
 			json = listenerRight.next();
 			if (json == null) {
+				break;
+			}
+			type = json.get("type").getAsString();
+			if (type.equals("ig_client_end")) {
 				break;
 			}
 			handle(json);
