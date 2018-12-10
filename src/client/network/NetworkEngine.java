@@ -47,16 +47,10 @@ public class NetworkEngine {
 		double y = iv.get("y").getAsDouble();
 		double dx = iv.get("dx").getAsDouble();
 		double dy = iv.get("dy").getAsDouble();
-		this.game.getBall().setX(x);
-		this.game.getBall().setY(y);
-		long sleep = gamestart.get("start").getAsLong() - System.currentTimeMillis();
-		try {
-			Thread.sleep(sleep);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		long delay = System.currentTimeMillis() - gamestart.get("start").getAsLong();
+		this.game.getBall().setX(x + dx * delay);
+		this.game.getBall().setY(y + dy * delay);
 		this.game.getBall().addVector(new Vector(dx, dy));
-
 		return null;
 	}
 }
