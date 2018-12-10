@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import client.util.JsonSocketReader;
-import client.util.JsonSocketWriter;
+import utils.JsonSocketReader;
+import utils.JsonSocketWriter;
 
 public class NetworkEngine {
 

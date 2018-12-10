@@ -1,4 +1,4 @@
-package client.util;
+package utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
