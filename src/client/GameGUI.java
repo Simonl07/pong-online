@@ -1,6 +1,8 @@
 package client;
 
 import java.awt.EventQueue;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 
@@ -29,17 +31,15 @@ public class GameGUI extends JFrame {
 		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.34.220", 8000);
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, networkEngine, 60);
-		// try {
-		// networkEngine.findMatch();
-		// } catch (UnknownHostException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-
-		networkEngine.connectPeer("10.1.34.220", 8888, 8888, true);
+		try {
+			networkEngine.findMatch();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		this.add(graphicsEngine.getGraphicsComponent());
 		this.setTitle("pong-client");

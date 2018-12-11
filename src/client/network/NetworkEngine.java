@@ -32,16 +32,14 @@ public class NetworkEngine {
 		Socket socket = new Socket(GAME_SERVER_HOST, GAME_SERVER_PORT);
 		JsonSocketWriter writer = new JsonSocketWriter(socket);
 		JsonSocketReader reader = new JsonSocketReader(socket);
-		this.connector.startServer();
 
 		writer.write(JsonTemplates.MM_CLIENT_HELLO(PeerConnector.DEFAULT_LOCAL_PORT));
 		JsonObject gamestart = reader.next();
 
 		this.game.setLeft(gamestart.get("you").getAsString().equals("left"));
-
 		String oppHost = gamestart.get("opp_host").getAsString();
 		int oppPort = gamestart.get("opp_port").getAsInt();
-		this.connector.startClient(oppHost, oppPort);
+		this.connectPeer(oppHost, oppPort, 8888, this.game.isLeft());
 
 		JsonObject iv = gamestart.get("iv").getAsJsonObject();
 		double x = iv.get("x").getAsDouble();
@@ -49,8 +47,9 @@ public class NetworkEngine {
 		double dx = iv.get("dx").getAsDouble();
 		double dy = iv.get("dy").getAsDouble();
 		long delay = System.currentTimeMillis() - gamestart.get("start").getAsLong();
-		this.game.getBall().setX(x + dx * delay);
-		this.game.getBall().setY(y + dy * delay);
+		long delayAdjusted = this.game.isLeft() ? delay + this.getClockOffset() : delay;
+		this.game.getBall().setX(x + dx * delayAdjusted);
+		this.game.getBall().setY(y + dy * delayAdjusted);
 		this.game.getBall().addVector(new Vector(dx, dy));
 
 		// System.out.println(String.format("delay=%d, x=%f, y=%f", delay, x,
