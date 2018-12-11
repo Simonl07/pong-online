@@ -10,13 +10,13 @@ import client.network.NetworkEngine;
 import client.physics.PhysicsEngine;
 
 @SuppressWarnings("serial")
-public class Client extends JFrame {
+public class GameGUI extends JFrame {
 
 	private String remoteHost;
 	private int remotePort;
 	private int localPort;
 
-	public Client(String remoteHost, int remotePort, int localPort) {
+	public GameGUI(String remoteHost, int remotePort, int localPort) {
 		this.remoteHost = remoteHost;
 		this.remotePort = remotePort;
 		this.localPort = localPort;
@@ -58,7 +58,7 @@ public class Client extends JFrame {
 		int localPort = Integer.parseInt(args[2]);
 
 		EventQueue.invokeLater(() -> {
-			Client ex = new Client(remotehost, remotePort, localPort);
+			GameGUI ex = new GameGUI(remotehost, remotePort, localPort);
 			ex.setVisible(true);
 		});
 	}
