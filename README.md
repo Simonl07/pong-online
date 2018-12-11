@@ -4,6 +4,10 @@ Multiplayer pong game using sockets connection and java applet/2D graphics
 <img src="https://teachingkidstocode.io/wp-content/uploads/2017/08/Pong-1920x1200-31.jpg" width="384" height="240" />
 
 
+## Architecture
+<img src="https://raw.githubusercontent.com/Simonl07/pong-online/master/designs/architecture.png" width="800" height="600" />
+
+
 The project breaks down into the following modules:
 
 ## Graphics Engine:
@@ -48,6 +52,9 @@ Both game client & server contains modules for in-game communication. These comm
 If we have time, it would be ideal to add more interesting game play into the vintage game. Possible additional gameplay feature:
 
 * - [ ] In game items: accelerator, decelerator, obstacles, random vector, death trap, dual-ball and size changer. - Simon & Zero
+
+## How the reflect vector is calculated
+<img src="https://raw.githubusercontent.com/Simonl07/pong-online/master/designs/vectors.png" width="490" height="400" />
 
 
 # Match-making communications:
