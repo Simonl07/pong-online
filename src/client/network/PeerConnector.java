@@ -27,8 +27,12 @@ public class PeerConnector {
 	}
 
 	public void startServer() {
+		this.startServer(DEFAULT_LOCAL_PORT);
+	}
+
+	public void startServer(int localPort) {
 		try {
-			this.server = new ServerSocket(DEFAULT_LOCAL_PORT);
+			this.server = new ServerSocket(localPort);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +57,6 @@ public class PeerConnector {
 					JsonSocketReader listener = new JsonSocketReader(socket);
 					while (!shutdown) {
 						JsonObject json = listener.next();
-						// System.out.println(json);
 						if (json.has("type") && json.get("type").getAsString().equals("ig_client_broadcast_blockpos")) {
 							game.getOpponent().setY(json.get("y").getAsInt());
 						}

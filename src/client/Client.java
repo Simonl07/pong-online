@@ -30,15 +30,17 @@ public class Client extends JFrame {
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, 60);
 		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.110.248", 8000);
-		try {
-			networkEngine.findMatch();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			networkEngine.findMatch();
+//		} catch (UnknownHostException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		networkEngine.connectPeer("127.0.0.1", 8888, 8889, true);
 
 		this.add(graphicsEngine.getGraphicsComponent());
 		this.setTitle("pong-client");
