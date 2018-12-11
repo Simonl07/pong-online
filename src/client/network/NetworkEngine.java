@@ -53,7 +53,8 @@ public class NetworkEngine {
 		this.game.getBall().setY(y + dy * delay);
 		this.game.getBall().addVector(new Vector(dx, dy));
 
-		System.out.println(String.format("delay=%d, x=%f, y=%f", delay, x, y));
+		// System.out.println(String.format("delay=%d, x=%f, y=%f", delay, x,
+		// y));
 		return null;
 	}
 
@@ -62,6 +63,7 @@ public class NetworkEngine {
 			this.game.setLeft(isLeft);
 			long offset = ClockSynchronizer.syncAsLeft(host, port);
 			this.setClockOffset(offset);
+			System.out.println(String.format("Offset obtained: %dms", offset));
 		} else {
 			ClockSynchronizer.syncAsRight(localPort);
 		}

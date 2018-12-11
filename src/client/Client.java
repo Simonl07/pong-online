@@ -39,7 +39,7 @@ public class Client extends JFrame {
 		// e.printStackTrace();
 		// }
 
-		networkEngine.connectPeer("127.0.0.1", 8889, 8888, true);
+		networkEngine.connectPeer("127.0.0.1", 8888, 8889, true);
 
 		this.add(graphicsEngine.getGraphicsComponent());
 		this.setTitle("pong-client");
