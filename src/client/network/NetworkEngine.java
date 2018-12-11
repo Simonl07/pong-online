@@ -39,7 +39,7 @@ public class NetworkEngine {
 		this.game.setLeft(gamestart.get("you").getAsString().equals("left"));
 		String oppHost = gamestart.get("opp_host").getAsString();
 		int oppPort = gamestart.get("opp_port").getAsInt();
-		this.connectPeer(oppHost, oppPort, 8888, this.game.isLeft());
+		this.connectPeer(oppHost, oppPort, PeerConnector.DEFAULT_LOCAL_PORT, this.game.isLeft());
 
 		JsonObject iv = gamestart.get("iv").getAsJsonObject();
 		double x = iv.get("x").getAsDouble();
