@@ -15,9 +15,9 @@ The graphics engine is used by game client and responsible for rendering the gam
 ## Physics Engine:
 The Graphics Engine will consult the physics engine for interactions such as edge detection, reflection and vector calculation to properly render the game play. The Physics Engine includes:
 
-* - [ ] General Edge Detection - Simon
-* - [ ] Edge Reflection - Simon
-* - [ ] Vector calculation for board and ball interaction - Simon
+* - [x] General Edge Detection - Simon
+* - [x] Edge Reflection - Simon
+* - [x] Vector calculation for board and ball interaction - Simon
 
 ## Match-making:
 Both game client & server contains modules designed for match making. The module will be using a long socket connection which will also used for in-game communication once a game session is matched. The server side contains thread safe data structure that stores waiting players and match players based on latency. Once a succesful game session is matched, server will send the game session id(for resume socket connection), scores(starts with 0:0), initial conditions(x, y, dx, dy for ball), and beginning timestamp.
@@ -32,9 +32,15 @@ Both game client & server contains modules designed for match making. The module
 Both game client & server contains modules for in-game communication. These communication includes:
 
 * - [ ] Rebounce Reports: new bounce vector report from client - Zero
-* - [ ] Board Position Reports: current board position from client, necessary for real time opponent board rendering - Zero
 * - [ ] Round End Reports: reports that the ball entered current players side and represents that the current player lose the round, send from client - Zero
 * - [ ] New Round: signals a new round with initial conditions and scores. Send from server to clients. This also works for resumed sessions when a disconnected player reconnect - Zero
+
+## Client-Client communication:
+
+* - [x] Board Position Reports: current board position from client, necessary for real time opponent board rendering - Simon
+* - [x] Clock synchronization, sync System.currenttimemills() for both clients - Simon
+
+
 
 
 ## Game dynamics extension:
