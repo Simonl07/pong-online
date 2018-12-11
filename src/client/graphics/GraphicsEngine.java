@@ -10,6 +10,7 @@ import java.io.IOException;
 import client.game.Ball;
 import client.game.Block;
 import client.game.Game;
+import client.network.NetworkEngine;
 import client.physics.PhysicsEngine;
 
 public class GraphicsEngine {
@@ -17,6 +18,7 @@ public class GraphicsEngine {
 	private Game game;
 	private GraphicsComponent graphicsComponent;
 	private PhysicsEngine physicsEngine;
+	private NetworkEngine networkEngine;
 	private RenderThread renderer;
 	private int gameWidth;
 	private int gameHeight;
@@ -32,12 +34,13 @@ public class GraphicsEngine {
 		}
 	}
 
-	public GraphicsEngine(Game game, PhysicsEngine physicsEngine, int targetFPS) {
+	public GraphicsEngine(Game game, PhysicsEngine physicsEngine, NetworkEngine networkEngine, int targetFPS) {
 		this.game = game;
 		this.gameWidth = game.getWidth();
 		this.gameHeight = game.getHeight();
 		this.graphicsComponent = new GraphicsComponent(this.game, this);
 		this.physicsEngine = physicsEngine;
+		this.networkEngine = networkEngine;
 		this.targetFPS = targetFPS;
 		this.renderer = new RenderThread(this.game, this.graphicsComponent, this.targetFPS);
 		this.renderer.start();
@@ -55,6 +58,7 @@ public class GraphicsEngine {
 		paintScore(g);
 		paintPPS(g);
 		paintFPS(g);
+		paintSyncClock(g);
 	}
 
 	private void paintBall(Graphics g) {
@@ -104,6 +108,13 @@ public class GraphicsEngine {
 		Font prev = g.getFont();
 		g.setFont(GraphicsEngine.SCORE_FONT.deriveFont((float) 8.0));
 		g.drawString("target FPS: " + this.targetFPS + "     FPS: " + this.game.getFps(), 2, 30);
+		g.setFont(prev);
+	}
+
+	private void paintSyncClock(Graphics g) {
+		Font prev = g.getFont();
+		g.setFont(GraphicsEngine.SCORE_FONT.deriveFont((float) 8.0));
+		g.drawString("sync clock: " + System.currentTimeMillis() + this.networkEngine.getClockOffset(), 2, 43);
 		g.setFont(prev);
 	}
 }

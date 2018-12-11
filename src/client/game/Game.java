@@ -14,6 +14,7 @@ public class Game {
 	private int scoreP2;
 	private int pps;
 	private int fps;
+	private long syncTimeDisplay;
 
 	public Game(int width, int height) {
 		this.width = width;
@@ -146,6 +147,20 @@ public class Game {
 
 	public Block getOpponent() {
 		return this.isLeft ? this.right : this.left;
+	}
+
+	/**
+	 * @return the syncTimeDisplay
+	 */
+	public long getSyncTimeDisplay() {
+		return syncTimeDisplay;
+	}
+
+	/**
+	 * @param syncTimeDisplay the syncTimeDisplay to set
+	 */
+	public void setSyncTimeDisplay(long syncTimeDisplay) {
+		this.syncTimeDisplay = syncTimeDisplay;
 	}
 
 	public void updateMouse(MouseEvent e) {

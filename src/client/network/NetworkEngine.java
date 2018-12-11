@@ -16,9 +16,10 @@ public class NetworkEngine {
 
 	private final String GAME_SERVER_HOST;
 	private final int GAME_SERVER_PORT;
-	private Game game;
-	private boolean peerConnected;
 	private PeerConnector connector;
+	private boolean peerConnected;
+	private Game game;
+	private long clockOffset;
 
 	public NetworkEngine(Game game, String serverHost, int serverPort) {
 		this.GAME_SERVER_HOST = serverHost;
@@ -57,15 +58,22 @@ public class NetworkEngine {
 	}
 
 	public void connectPeer(String host, int port, int localPort, boolean isLeft) {
+		if (isLeft) {
+			this.game.setLeft(isLeft);
+			long offset = ClockSynchronizer.syncAsLeft(host, port);
+			this.setClockOffset(offset);
+		} else {
+			ClockSynchronizer.syncAsRight(localPort);
+		}
+
 		this.connector.startServer(localPort);
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.connector.startClient(host, port);
-		this.game.setLeft(isLeft);
 		this.setPeerConnected(true);
 	}
 
@@ -81,6 +89,20 @@ public class NetworkEngine {
 	 */
 	public void setPeerConnected(boolean peerConnected) {
 		this.peerConnected = peerConnected;
+	}
+
+	/**
+	 * @return the clockOffset
+	 */
+	public long getClockOffset() {
+		return clockOffset;
+	}
+
+	/**
+	 * @param clockOffset the clockOffset to set
+	 */
+	public void setClockOffset(long clockOffset) {
+		this.clockOffset = clockOffset;
 	}
 
 }
