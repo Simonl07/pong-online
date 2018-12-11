@@ -66,6 +66,7 @@ public class NetworkEngine {
 			System.out.println(String.format("Offset obtained: %dms", offset));
 		} else {
 			ClockSynchronizer.syncAsRight(localPort);
+			this.setClockOffset(0);
 		}
 
 		this.connector.startServer(localPort);

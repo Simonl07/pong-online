@@ -12,7 +12,7 @@ import utils.JsonSocketWriter;
 
 public class ClockSynchronizer {
 	public static long syncAsLeft(String host, int port) {
-		final int SAMPLE_SIZE = 100;
+		final int SAMPLE_SIZE = 1;
 
 		try {
 			Socket socket = new Socket(host, port);

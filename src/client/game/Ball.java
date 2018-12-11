@@ -82,7 +82,7 @@ public class Ball implements Collidable {
 		this.x += this.getVector().getDx() * diff;
 		this.y += this.getVector().getDy() * diff;
 		this.getVector().setTimestamp(newTimestamp);
-		System.out.println(String.format("x: %f, y: %f, dx: %f, dy: %f, diff: %f", x, y, this.getVector().getDx(), this.getVector().getDy(), (double)diff));
+//		System.out.println(String.format("x: %f, y: %f, dx: %f, dy: %f, diff: %f", x, y, this.getVector().getDx(), this.getVector().getDy(), (double)diff));
 
 	}
 }

@@ -26,7 +26,7 @@ public class GameGUI extends JFrame {
 	private void initUI() {
 		Game g = new Game(1000, 600);
 
-		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.110.248", 8000);
+		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.34.220", 8000);
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, networkEngine, 60);
 		// try {
@@ -39,7 +39,7 @@ public class GameGUI extends JFrame {
 		// e.printStackTrace();
 		// }
 
-		networkEngine.connectPeer("127.0.0.1", 8888, 8889, true);
+		networkEngine.connectPeer("10.1.34.220", 8888, 8888, true);
 
 		this.add(graphicsEngine.getGraphicsComponent());
 		this.setTitle("pong-client");
