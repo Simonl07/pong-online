@@ -27,7 +27,7 @@ public class ClockSynchronizer {
 				JsonObject res = reader.next();
 				end = System.currentTimeMillis();
 				singleTrip = (end - start) / 2.0;
-				offset = res.get("t").getAsLong() - (start + singleTrip);
+				offset = res.get("t").getAsLong() - (start);
 				totalOffset += offset;
 			}
 

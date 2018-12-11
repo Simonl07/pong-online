@@ -114,7 +114,11 @@ public class GraphicsEngine {
 	private void paintSyncClock(Graphics g) {
 		Font prev = g.getFont();
 		g.setFont(GraphicsEngine.SCORE_FONT.deriveFont((float) 8.0));
-		g.drawString("sync clock: " + System.currentTimeMillis() + this.networkEngine.getClockOffset(), 2, 43);
+		long ts = System.currentTimeMillis();
+		g.drawString("unsync clock: " + ts, 2, 43);
+		System.out.println(this.networkEngine.getClockOffset());
+		g.drawString("sync clock: " + (ts + this.networkEngine.getClockOffset()), 2, 56);
+
 		g.setFont(prev);
 	}
 }

@@ -79,6 +79,12 @@ public class PeerConnector {
 					JsonObject json = new JsonObject();
 					json.addProperty("type", "ig_client_broadcast_blockpos");
 					json.addProperty("y", game.getMe().getY());
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					writer.write(json);
 				}
 			} catch (IOException e) {
