@@ -24,6 +24,13 @@ public class GraphicsEngine {
 	private int gameHeight;
 	private int targetFPS;
 	private static Font SCORE_FONT;
+
+	private enum GRAPHICS_STAGE {
+		MENU, INGAME, ENDGAME
+	}
+
+	private GRAPHICS_STAGE stage;
+
 	static {
 		try {
 			SCORE_FONT = Font.createFont(Font.TRUETYPE_FONT, new File("src/client/dash_digital-7.ttf"));
@@ -51,6 +58,28 @@ public class GraphicsEngine {
 	}
 
 	public void paintGraphics(Graphics g) {
+		switch (stage) {
+			case MENU:
+				paintMenu(g);
+				break;
+			case INGAME:
+				paintGame(g);
+				break;
+			case ENDGAME:
+				paintEnd(g);
+				break;
+		}
+	}
+
+	private void paintEnd(Graphics g) {
+		
+	}
+
+	private void paintMenu(Graphics g) {
+		
+	}
+
+	public void paintGame(Graphics g) {
 		paintMe(g);
 		paintOpp(g);
 		paintBall(g);

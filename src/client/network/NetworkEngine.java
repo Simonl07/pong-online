@@ -142,11 +142,13 @@ public class NetworkEngine {
 					double dx = v.get("dx").getAsDouble();
 					double dy = v.get("dy").getAsDouble();
 
-					game.getBall().setX(x);
-					game.getBall().setY(y);
-					game.getBall().getVector().setDx(dx);
-					game.getBall().getVector().setDy(dy);
-					game.getBall().getVector().setTimestamp(reflect.get("start").getAsLong());
+					synchronized (game.getBall()) {
+						game.getBall().setX(x);
+						game.getBall().setY(y);
+						game.getBall().getVector().setDx(dx);
+						game.getBall().getVector().setDy(dy);
+						game.getBall().getVector().setTimestamp(reflect.get("start").getAsLong());
+					}
 				}
 			}
 		}

@@ -56,22 +56,24 @@ public class PhysicsThread extends Thread {
 		Ball ball = this.game.getBall();
 		Block me = this.game.getMe();
 
-		if (!checkWall(ball)) {
-			if (exitRounds == 0 && intersect(ball, me)) {
-				System.out.println("Ball: " + ball.getVector());
-				System.out.println("P1 Block: " + me.getVector());
-				ball.getVector().setDx(-1 * ball.getVector().getDx());
-				ball.getVector().add(me.getVector());
-				networkEngine.reportReflect(ball.getX(), ball.getY(), ball.getVector().getDx(), ball.getVector().getDy());
-				System.out.println("Ball: " + ball.getVector());
-				System.out.println("P1 Block:" + me.getVector());
-				this.exitRounds = 2;
+		synchronized (ball) {
+			if (!checkWall(ball)) {
+				if (exitRounds == 0 && intersect(ball, me)) {
+					System.out.println("Ball: " + ball.getVector());
+					System.out.println("P1 Block: " + me.getVector());
+					ball.getVector().setDx(-1 * ball.getVector().getDx());
+					ball.getVector().add(me.getVector());
+					networkEngine.reportReflect(ball.getX(), ball.getY(), ball.getVector().getDx(), ball.getVector().getDy());
+					System.out.println("Ball: " + ball.getVector());
+					System.out.println("P1 Block:" + me.getVector());
+					this.exitRounds = 2;
+				}
+				if (exitRounds != 0) {
+					exitRounds--;
+				}
 			}
-			if (exitRounds != 0) {
-				exitRounds--;
-			}
+			ball.update(System.currentTimeMillis());
 		}
-		ball.update(System.currentTimeMillis());
 	}
 
 	private boolean intersect(Ball ball, Block block) {
