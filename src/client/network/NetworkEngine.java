@@ -20,6 +20,8 @@ public class NetworkEngine {
 	private boolean peerConnected;
 	private Game game;
 	private long clockOffset;
+	private Socket gameSocket;
+	private ServerResponseMonitor serverMonitor;
 
 	public NetworkEngine(Game game, String serverHost, int serverPort) {
 		this.GAME_SERVER_HOST = serverHost;
@@ -28,7 +30,7 @@ public class NetworkEngine {
 		this.connector = new PeerConnector(game);
 	}
 
-	public Socket findMatch() throws UnknownHostException, IOException {
+	public void findMatch() throws UnknownHostException, IOException {
 		Socket socket = new Socket(GAME_SERVER_HOST, GAME_SERVER_PORT);
 		JsonSocketWriter writer = new JsonSocketWriter(socket);
 		JsonSocketReader reader = new JsonSocketReader(socket);
@@ -48,13 +50,16 @@ public class NetworkEngine {
 		double dy = iv.get("dy").getAsDouble();
 		long delay = System.currentTimeMillis() - gamestart.get("start").getAsLong();
 		long delayAdjusted = this.game.isLeft() ? delay + this.getClockOffset() : delay;
+		System.out.println(delayAdjusted + "|" + (x + dx * delayAdjusted));
 		this.game.getBall().setX(x + dx * delayAdjusted);
 		this.game.getBall().setY(y + dy * delayAdjusted);
 		this.game.getBall().addVector(new Vector(dx, dy));
 
 		// System.out.println(String.format("delay=%d, x=%f, y=%f", delay, x,
 		// y));
-		return null;
+		this.gameSocket = socket;
+		this.serverMonitor = new ServerResponseMonitor();
+		this.serverMonitor.start();
 	}
 
 	public void connectPeer(String host, int port, int localPort, boolean isLeft) {
@@ -77,6 +82,17 @@ public class NetworkEngine {
 		}
 		this.connector.startClient(host, port);
 		this.setPeerConnected(true);
+	}
+
+	public void reportReflect(int x, int y, int dx, int dy) {
+		JsonSocketWriter writer = new JsonSocketWriter(this.gameSocket);
+		JsonObject json;
+		if (this.game.isLeft()) {
+			json = JsonTemplates.IG_CLIENT_REFLECT(x, y, dx, dy, System.currentTimeMillis() + this.getClockOffset());
+		} else {
+			json = JsonTemplates.IG_CLIENT_REFLECT(x, y, dx, dy, System.currentTimeMillis());
+
+		}
 	}
 
 	/**
@@ -105,6 +121,31 @@ public class NetworkEngine {
 	 */
 	public void setClockOffset(long clockOffset) {
 		this.clockOffset = clockOffset;
+	}
+
+	private class ServerResponseMonitor extends Thread {
+
+		@Override
+		public void run() {
+			JsonSocketReader reader = new JsonSocketReader(gameSocket);
+			while (true) {
+				JsonObject reflect = reader.next();
+				if (reflect.get("type").getAsString().equals("ig_server_broadcast_reflect")) {
+					JsonObject v = reflect.get("v").getAsJsonObject();
+					double x = v.get("x").getAsDouble();
+					double y = v.get("y").getAsDouble();
+					double dx = v.get("dx").getAsDouble();
+					double dy = v.get("dy").getAsDouble();
+
+					game.getBall().setX(x);
+					game.getBall().setY(y);
+					game.getBall().getVector().setDx(dx);
+					game.getBall().getVector().setDy(dy);
+					game.getBall().getVector().setTimestamp(reflect.get("start").getAsLong());
+				}
+			}
+		}
+
 	}
 
 }

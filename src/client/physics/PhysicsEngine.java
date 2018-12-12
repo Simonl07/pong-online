@@ -1,6 +1,7 @@
 package client.physics;
 
 import client.game.Game;
+import client.network.NetworkEngine;
 
 public class PhysicsEngine {
 
@@ -8,12 +9,13 @@ public class PhysicsEngine {
 	private int targetPPS;
 	private PhysicsThread physicsThread;
 
-	public PhysicsEngine(Game game, int targetPPS) {
+	public PhysicsEngine(Game game, NetworkEngine networkEngine, int targetPPS) {
 		this.game = game;
 		this.targetPPS = targetPPS;
-		this.physicsThread = new PhysicsThread(this.game, this.targetPPS);
+		this.physicsThread = new PhysicsThread(this.game, networkEngine, this.targetPPS);
 		this.physicsThread.start();
 	}
+
 	/**
 	 * @return the targetPPS
 	 */
@@ -27,6 +29,5 @@ public class PhysicsEngine {
 	public void setTargetPPS(int targetPPS) {
 		this.targetPPS = targetPPS;
 	}
-	
 
 }

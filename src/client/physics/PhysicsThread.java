@@ -3,6 +3,7 @@ package client.physics;
 import client.game.Ball;
 import client.game.Block;
 import client.game.Game;
+import client.network.NetworkEngine;
 import client.util.AverageRateOfChangeQueue;
 
 public class PhysicsThread extends Thread {
@@ -12,11 +13,13 @@ public class PhysicsThread extends Thread {
 	private long targetDelay;
 	private AverageRateOfChangeQueue<Integer> arocq;
 	private static final int MAXIMUM_PPS_SUPPORTED = 200;
+	private NetworkEngine networkEngine;
 
-	public PhysicsThread(Game game, int targetPPS) {
+	public PhysicsThread(Game game, NetworkEngine networkEngine, int targetPPS) {
 		this.game = game;
 		this.setPPS(targetPPS);
 		this.arocq = new AverageRateOfChangeQueue<>(MAXIMUM_PPS_SUPPORTED);
+		this.networkEngine = networkEngine;
 	}
 
 	public void setPPS(int targetPPS) {
@@ -59,7 +62,7 @@ public class PhysicsThread extends Thread {
 				System.out.println("P1 Block: " + me.getVector());
 				ball.getVector().setDx(Math.abs(ball.getVector().getDx()));
 				ball.getVector().add(me.getVector());
-
+				
 				System.out.println("Ball: " + ball.getVector());
 				System.out.println("P1 Block:" + me.getVector());
 				this.exitRounds = 2;
