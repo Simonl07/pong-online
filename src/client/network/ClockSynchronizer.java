@@ -12,7 +12,7 @@ import utils.JsonSocketWriter;
 
 public class ClockSynchronizer {
 	public static long syncAsLeft(String host, int port) {
-		final int SAMPLE_SIZE = 1;
+		final int SAMPLE_SIZE = 100;
 
 		try {
 			Socket socket = new Socket(host, port);
@@ -27,7 +27,7 @@ public class ClockSynchronizer {
 				JsonObject res = reader.next();
 				end = System.currentTimeMillis();
 				singleTrip = (end - start) / 2.0;
-				offset = res.get("t").getAsLong() - (start);
+				offset = res.get("t").getAsLong() - (start + singleTrip);
 				totalOffset += offset;
 			}
 

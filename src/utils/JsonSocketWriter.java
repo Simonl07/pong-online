@@ -20,11 +20,10 @@ public class JsonSocketWriter {
 	}
 
 	public void write(JsonObject json) {
-		System.out.println("FUCK " + json);
 		String output = json.toString() + "\n" + EOT + "\n";
 		this.writer.write(output);
 		this.writer.flush();
-		
+
 	}
 
 	/**

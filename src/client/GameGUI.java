@@ -31,15 +31,16 @@ public class GameGUI extends JFrame {
 		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.34.220", 8000);
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, networkEngine, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, networkEngine, 60);
-		try {
-			networkEngine.findMatch();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			networkEngine.findMatch();
+//		} catch (UnknownHostException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		networkEngine.connectPeer("localhost", 8889, 8888, true);
 
 		this.add(graphicsEngine.getGraphicsComponent());
 		this.setTitle("pong-client");

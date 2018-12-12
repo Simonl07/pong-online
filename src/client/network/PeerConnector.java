@@ -52,13 +52,15 @@ public class PeerConnector {
 			while (!shutdown) {
 				try {
 					DataInputStream input = new DataInputStream(server.accept().getInputStream());
-//					JsonSocketReader listener = new JsonSocketReader(socket);
-//					while (!shutdown) {
-//						JsonObject json = listener.next();
-//						if (json.has("type") && json.get("type").getAsString().equals("ig_client_broadcast_blockpos")) {
-//							game.getOpponent().setY(json.get("y").getAsInt());
-//						}
-//					}
+					// JsonSocketReader listener = new JsonSocketReader(socket);
+					// while (!shutdown) {
+					// JsonObject json = listener.next();
+					// if (json.has("type") &&
+					// json.get("type").getAsString().equals("ig_client_broadcast_blockpos"))
+					// {
+					// game.getOpponent().setY(json.get("y").getAsInt());
+					// }
+					// }
 					while (!shutdown) {
 						game.getOpponent().setY(input.readShort());
 					}
@@ -75,23 +77,26 @@ public class PeerConnector {
 		@Override
 		public void run() {
 			try {
-//				JsonSocketWriter writer = new JsonSocketWriter(new Socket(remoteHost, remotePort));
-//				while (!shutdown) {
-//					JsonObject json = new JsonObject();
-//					json.addProperty("type", "ig_client_broadcast_blockpos");
-//					json.addProperty("y", game.getMe().getY());
-//					try {
-//						Thread.sleep(100);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					writer.write(json);
-//				}
-				DataOutputStream output = new DataOutputStream(new Socket(remoteHost, remotePort).getOutputStream());
+				// JsonSocketWriter writer = new JsonSocketWriter(new
+				// Socket(remoteHost, remotePort));
+				// while (!shutdown) {
+				// JsonObject json = new JsonObject();
+				// json.addProperty("type", "ig_client_broadcast_blockpos");
+				// json.addProperty("y", game.getMe().getY());
+				// try {
+				// Thread.sleep(100);
+				// } catch (InterruptedException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
+				// writer.write(json);
+				// }
+				Socket socket = new Socket(remoteHost, remotePort);
+				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				while (!shutdown) {
 					output.writeShort(game.getMe().getY());
 				}
+				socket.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

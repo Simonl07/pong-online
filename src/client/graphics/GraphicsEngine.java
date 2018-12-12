@@ -50,6 +50,7 @@ public class GraphicsEngine {
 		this.networkEngine = networkEngine;
 		this.targetFPS = targetFPS;
 		this.renderer = new RenderThread(this.game, this.graphicsComponent, this.targetFPS);
+		this.stage = GRAPHICS_STAGE.INGAME;
 		this.renderer.start();
 	}
 
