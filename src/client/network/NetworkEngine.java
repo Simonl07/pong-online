@@ -37,6 +37,10 @@ public class NetworkEngine {
 		this.reader = new JsonSocketReader(socket);
 
 		writer.write(JsonTemplates.MM_CLIENT_HELLO(PeerConnector.DEFAULT_LOCAL_PORT));
+
+	}
+
+	public void waitForStart() {
 		JsonObject gamestart = reader.next();
 		System.out.println(gamestart);
 		this.game.setLeft(gamestart.get("you").getAsString().equals("left"));
@@ -56,8 +60,6 @@ public class NetworkEngine {
 		this.game.getBall().setY(y + dy * delayAdjusted);
 		this.game.getBall().addVector(new Vector(dx, dy));
 
-		// System.out.println(String.format("delay=%d, x=%f, y=%f", delay, x,
-		// y));
 		this.serverMonitor = new ServerResponseMonitor();
 		this.serverMonitor.start();
 	}
@@ -92,6 +94,11 @@ public class NetworkEngine {
 			json = JsonTemplates.IG_CLIENT_REFLECT(x, y, dx, dy, System.currentTimeMillis());
 		}
 		System.out.println("BOOM!\n" + json.toString());
+		this.writer.write(json);
+	}
+
+	public void reportRoundEnd() {
+		JsonObject json = JsonTemplates.IG_CLIENT_END_ROUND();
 		this.writer.write(json);
 	}
 
@@ -148,6 +155,8 @@ public class NetworkEngine {
 						}
 						game.getBall().getVector().setTimestamp(timestamp);
 					}
+				} else if (reflect.get("type").getAsString().equals("ig_server_end_round")) {
+					waitForStart();
 				}
 			}
 		}
