@@ -1,6 +1,9 @@
 package client.network;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -53,13 +56,16 @@ public class PeerConnector {
 		public void run() {
 			while (!shutdown) {
 				try {
-					Socket socket = server.accept();
-					JsonSocketReader listener = new JsonSocketReader(socket);
+					DataInputStream input = new DataInputStream(server.accept().getInputStream());
+//					JsonSocketReader listener = new JsonSocketReader(socket);
+//					while (!shutdown) {
+//						JsonObject json = listener.next();
+//						if (json.has("type") && json.get("type").getAsString().equals("ig_client_broadcast_blockpos")) {
+//							game.getOpponent().setY(json.get("y").getAsInt());
+//						}
+//					}
 					while (!shutdown) {
-						JsonObject json = listener.next();
-						if (json.has("type") && json.get("type").getAsString().equals("ig_client_broadcast_blockpos")) {
-							game.getOpponent().setY(json.get("y").getAsInt());
-						}
+						game.getOpponent().setY(input.readShort());
 					}
 
 				} catch (IOException e) {
@@ -74,18 +80,22 @@ public class PeerConnector {
 		@Override
 		public void run() {
 			try {
-				JsonSocketWriter writer = new JsonSocketWriter(new Socket(remoteHost, remotePort));
+//				JsonSocketWriter writer = new JsonSocketWriter(new Socket(remoteHost, remotePort));
+//				while (!shutdown) {
+//					JsonObject json = new JsonObject();
+//					json.addProperty("type", "ig_client_broadcast_blockpos");
+//					json.addProperty("y", game.getMe().getY());
+//					try {
+//						Thread.sleep(100);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					writer.write(json);
+//				}
+				DataOutputStream output = new DataOutputStream(new Socket(remoteHost, remotePort).getOutputStream());
 				while (!shutdown) {
-					JsonObject json = new JsonObject();
-					json.addProperty("type", "ig_client_broadcast_blockpos");
-					json.addProperty("y", game.getMe().getY());
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					writer.write(json);
+					output.writeShort(game.getMe().getY());
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

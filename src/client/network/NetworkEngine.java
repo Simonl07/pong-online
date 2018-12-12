@@ -48,6 +48,7 @@ public class NetworkEngine {
 		double dy = iv.get("dy").getAsDouble();
 		long delay = System.currentTimeMillis() - gamestart.get("start").getAsLong();
 		long delayAdjusted = this.game.isLeft() ? delay + this.getClockOffset() : delay;
+		System.out.println(delayAdjusted + "|" + (x + dx * delayAdjusted));
 		this.game.getBall().setX(x + dx * delayAdjusted);
 		this.game.getBall().setY(y + dy * delayAdjusted);
 		this.game.getBall().addVector(new Vector(dx, dy));

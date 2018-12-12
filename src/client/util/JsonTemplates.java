@@ -17,10 +17,17 @@ public final class JsonTemplates {
 		return json;
 	}
 	
-	public static JsonObject IG_CLIENT_REFLECT(int x, int y, int dx, int dy){
+	public static JsonObject IG_CLIENT_REFLECT(int x, int y, int dx, int dy, long start){
 		JsonObject json = new JsonObject();
 		json.addProperty("type", "mm_client_cancel");
-		return json; //TODO
+		JsonObject v = new JsonObject();
+		v.addProperty("x", x);
+		v.addProperty("y", y);
+		v.addProperty("dx", dx);
+		v.addProperty("dy", dy);
+		json.add("v", v);
+		json.addProperty("start", start);
+		return json;
 	}
 	
 }
