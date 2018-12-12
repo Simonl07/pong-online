@@ -47,8 +47,6 @@ public class GameProcessor implements Runnable {
 		boolean isLeft = true;
 		JsonObject json = listenerLeft.next();
 		String type;
-		System.out.println("here!");
-		System.out.flush();
 		while (json != null && !(type = json.get(Info.TYPE).getAsString()).equals(Info.IG_CLIENT_END_GAME_TYPE)) {
 			isLeft = !isLeft;
 			switch (type) {
