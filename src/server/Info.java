@@ -20,8 +20,15 @@ public class Info {
 	public static final String IG_CLIENT_REFLECT_TYPE = "ig_client_reflect";
 
 	public static final String IG_SERVER_BROADCAST_REFLECT_TYPE = "ig_server_broadcast_reflect";
+	public static final String IG_SERVER_END_ROUND_TYPE = "ig_server_end_round";
 	public static final String IG_SERVER_END_GAME_TYPE = "ig_server_end_game";
 
+	public static JsonObject IG_SERVER_END_ROUND() {
+		JsonObject json = new JsonObject();
+		json.addProperty(TYPE, IG_SERVER_END_ROUND_TYPE);
+		return json;
+	}
+	
 	public static JsonObject IG_SERVER_END_GAME(int left, int right) {
 		JsonObject json = new JsonObject();
 		json.addProperty(Info.TYPE, IG_SERVER_END_GAME_TYPE);

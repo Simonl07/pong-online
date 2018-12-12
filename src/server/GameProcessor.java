@@ -54,8 +54,10 @@ public class GameProcessor implements Runnable {
 			case Info.IG_CLIENT_END_ROUND_TYPE:
 				if (isLeft) {
 					this.right.win();
+					this.notifyRight.write(Info.IG_SERVER_END_ROUND());
 				} else {
 					this.left.win();
+					this.notifyLeft.write(Info.IG_SERVER_END_ROUND());
 				}
 				this.notifyStart();
 				break;
