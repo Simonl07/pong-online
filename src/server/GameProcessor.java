@@ -27,7 +27,7 @@ public class GameProcessor implements Runnable {
 		JsonObject iv = Info.initGame();
 		JsonObject jsonLeft = generateStartInfo(true, iv);
 		JsonObject jsonRight = generateStartInfo(false, iv);
-		this.startTime = System.currentTimeMillis() + 5000;
+		this.startTime = System.currentTimeMillis() + 3000;
 		jsonLeft.addProperty("start", startTime);
 		jsonRight.addProperty("start", startTime);
 
@@ -54,8 +54,10 @@ public class GameProcessor implements Runnable {
 			case Info.IG_CLIENT_END_ROUND_TYPE:
 				if (isLeft) {
 					this.right.win();
+					this.notifyRight.write(Info.IG_SERVER_END_ROUND());
 				} else {
 					this.left.win();
+					this.notifyLeft.write(Info.IG_SERVER_END_ROUND());
 				}
 				this.notifyStart();
 				break;
