@@ -102,6 +102,7 @@ public class NetworkEngine {
 	public void reportRoundEnd() {
 		JsonObject json = JsonTemplates.IG_CLIENT_END_ROUND();
 		this.writer.write(json);
+		this.waitForStart();
 	}
 
 	/**
