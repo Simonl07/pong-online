@@ -57,12 +57,12 @@ public class PhysicsThread extends Thread {
 		Block me = this.game.getMe();
 
 		if (!checkWall(ball)) {
-			if (exitRounds == 0 && intersect(ball, me) && ball.getVector().getDx() < 0) {
+			if (exitRounds == 0 && intersect(ball, me)) {
 				System.out.println("Ball: " + ball.getVector());
 				System.out.println("P1 Block: " + me.getVector());
-				ball.getVector().setDx(Math.abs(ball.getVector().getDx()));
+				ball.getVector().setDx(-1 * ball.getVector().getDx());
 				ball.getVector().add(me.getVector());
-				
+				networkEngine.reportReflect(ball.getX(), ball.getY(), ball.getVector().getDx(), ball.getVector().getDy());
 				System.out.println("Ball: " + ball.getVector());
 				System.out.println("P1 Block:" + me.getVector());
 				this.exitRounds = 2;

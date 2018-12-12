@@ -4,20 +4,20 @@ import com.google.gson.JsonObject;
 
 public final class JsonTemplates {
 
-	public static JsonObject MM_CLIENT_HELLO(int port){
+	public static JsonObject MM_CLIENT_HELLO(int port) {
 		JsonObject json = new JsonObject();
 		json.addProperty("type", "mm_client_hello");
 		json.addProperty("port", port);
 		return json;
 	}
-	
-	public static JsonObject MM_CLIENT_CANCEL(){
+
+	public static JsonObject MM_CLIENT_CANCEL() {
 		JsonObject json = new JsonObject();
 		json.addProperty("type", "mm_client_cancel");
 		return json;
 	}
-	
-	public static JsonObject IG_CLIENT_REFLECT(int x, int y, int dx, int dy, long start){
+
+	public static JsonObject IG_CLIENT_REFLECT(int x, int y, double dx, double dy, long start) {
 		JsonObject json = new JsonObject();
 		json.addProperty("type", "mm_client_cancel");
 		JsonObject v = new JsonObject();
@@ -29,5 +29,5 @@ public final class JsonTemplates {
 		json.addProperty("start", start);
 		return json;
 	}
-	
+
 }
