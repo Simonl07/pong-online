@@ -27,7 +27,7 @@ public class GameProcessor implements Runnable {
 		JsonObject iv = Info.initGame();
 		JsonObject jsonLeft = generateStartInfo(true, iv);
 		JsonObject jsonRight = generateStartInfo(false, iv);
-		this.startTime = System.currentTimeMillis() + 5000;
+		this.startTime = System.currentTimeMillis() + 3000;
 		jsonLeft.addProperty("start", startTime);
 		jsonRight.addProperty("start", startTime);
 
