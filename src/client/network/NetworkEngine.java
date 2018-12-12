@@ -60,7 +60,8 @@ public class NetworkEngine {
 		this.game.getBall().setX(x + dx * delayAdjusted);
 		this.game.getBall().setY(y + dy * delayAdjusted);
 		this.game.getBall().addVector(new Vector(dx, dy));
-
+		this.game.setScoreP1(gamestart.get("left").getAsInt());
+		this.game.setScoreP2(gamestart.get("right").getAsInt());
 		this.serverMonitor = new ServerResponseMonitor();
 		this.serverMonitor.start();
 	}
