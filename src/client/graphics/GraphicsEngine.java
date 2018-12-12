@@ -56,25 +56,7 @@ public class GraphicsEngine {
 	}
 
 	public void paintGraphics(Graphics g) {
-		switch (stage) {
-		case MENU:
-			paintMenu(g);
-			break;
-		case INGAME:
-			paintGame(g);
-			break;
-		case ENDGAME:
-			paintEnd(g);
-			break;
-		}
-	}
-
-	private void paintEnd(Graphics g) {
-
-	}
-
-	private void paintMenu(Graphics g) {
-
+		paintGame(g);
 	}
 
 	public void paintGame(Graphics g) {
@@ -128,7 +110,8 @@ public class GraphicsEngine {
 	private void paintPPS(Graphics g) {
 		Font prev = g.getFont();
 		g.setFont(GraphicsEngine.SCORE_FONT.deriveFont((float) 8.0));
-		g.drawString("target PHY/s: " + this.physicsEngine.getTargetPPS() + "  PHY/s: " + this.physicsEngine.getPPS(), 2, 17);
+		g.drawString("target PHY/s: " + this.physicsEngine.getTargetPPS() + "  PHY/s: " + this.physicsEngine.getPPS(),
+				2, 17);
 		g.setFont(prev);
 	}
 

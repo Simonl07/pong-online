@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -31,6 +32,7 @@ public class GamePanel extends JPanel {
 		this.graphicsEngine = new GraphicsEngine(this.game, this, this.physicsEngine, this.networkEngine, 60);
 
 		this.addMouseMotionListener(new Mouse());
+		this.setBackground(Color.BLACK);
 	}
 
 	public Game getGame() {
