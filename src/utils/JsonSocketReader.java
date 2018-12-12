@@ -26,7 +26,9 @@ public class JsonSocketReader {
 	public JsonObject next() {
 		try {
 			JsonElement json = parser.parse(readNextMessage());
+//			System.out.println(json.toString());
 			if (json != null && !json.equals("")) {
+//				System.out.println("return");
 				return json.getAsJsonObject();
 			}
 			return null;
@@ -37,15 +39,18 @@ public class JsonSocketReader {
 
 	private String readNextMessage() throws IOException {
 		String message = "";
-		while (message.equals("")) {
-			String line = reader.readLine();
-			while (line != null && !line.trim().equals(EOT)) {
-				message += line + "\n";
-				line = reader.readLine();
-			}
+		StringBuilder builder = new StringBuilder();
+		String line;
+		while (!(line = reader.readLine().trim()).equals(EOT)) {
+//			System.out.println("line:" + line +"|");
+//			System.out.flush();
+			builder.append(line);
+//			System.out.println("to" + buffer.toString() + "|");
+//			System.out.flush();
 		}
-		// System.out.println(message);
-		return message;
+//		System.out.println("|" + buffer.toString() + "|");
+//		System.out.flush();
+		return builder.toString();
 	}
 
 	/**

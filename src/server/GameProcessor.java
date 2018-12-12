@@ -86,7 +86,6 @@ public class GameProcessor implements Runnable {
 		json.addProperty(Info.SESSION_ID, this.session_id);
 		initGame(json);
 		json.addProperty(Info.YOU, isLeft ? Info.LEFT : Info.RIGHT);
-		System.out.println(json.toString());
 		return json;
 	}
 

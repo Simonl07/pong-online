@@ -36,10 +36,11 @@ public class Server {
 				// generate player, start listening
 				PlayerInfo player = new PlayerInfo(socket);
 				JsonSocketReader listener = player.getReader();
-				JsonObject json;
-				while (!shutdown && (json = listener.next()) != null) {// TODO add end game condition
-					handleRequest(json, player);
-				}
+				JsonObject json = listener.next();
+				handleRequest(json, player);
+//				while (!shutdown && (json = listener.next()) != null) {// TODO add end game condition
+//					handleRequest(json, player);
+//				}
 			}
 		}
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -61,9 +62,9 @@ public class Server {
 			player.setPort(json.get("port").getAsInt());
 			match.join(player);
 			break;
-		case Info.MM_CLIENT_CANCEL_TYPE:
-			match.quit(player);
-			break;
+//		case Info.MM_CLIENT_CANCEL_TYPE:
+//			match.quit(player);
+//			break;
 		// TODO more case: end of game, reconnect, ...
 		}
 	}
