@@ -18,14 +18,23 @@ public class GamePanel extends JPanel {
 	private PhysicsEngine physicsEngine;
 	private NetworkEngine networkEngine;
 	private Game game;
+	private GUI gui;
 
-	public GamePanel(NetworkEngine networkEngine) {
+	public GamePanel(GUI gui) {
 		this.game = new Game(1000, 600);
+		this.gui = gui;
+	}
+
+	public void start(NetworkEngine networkEngine) {
 		this.networkEngine = networkEngine;
 		this.physicsEngine = new PhysicsEngine(this.game, networkEngine, 120);
 		this.graphicsEngine = new GraphicsEngine(this.game, this, this.physicsEngine, this.networkEngine, 60);
 
 		this.addMouseMotionListener(new Mouse());
+	}
+
+	public Game getGame() {
+		return game;
 	}
 
 	@Override

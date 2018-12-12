@@ -38,7 +38,6 @@ public class NetworkEngine {
 
 		writer.write(JsonTemplates.MM_CLIENT_HELLO(PeerConnector.DEFAULT_LOCAL_PORT));
 		JsonObject gamestart = reader.next();
-
 		this.game.setLeft(gamestart.get("you").getAsString().equals("left"));
 		String oppHost = gamestart.get("opp_host").getAsString();
 		int oppPort = gamestart.get("opp_port").getAsInt();

@@ -14,6 +14,7 @@ public class PhysicsThread extends Thread {
 	private AverageRateOfChangeQueue<Integer> arocq;
 	private static final int MAXIMUM_PPS_SUPPORTED = 200;
 	private NetworkEngine networkEngine;
+	private int pps;
 
 	public PhysicsThread(Game game, NetworkEngine networkEngine, int targetPPS) {
 		this.game = game;
@@ -43,7 +44,7 @@ public class PhysicsThread extends Thread {
 					}
 				}
 			}
-			this.game.setPps(arocq.getEntryFrequency(1000));
+			this.setPps(arocq.getEntryFrequency(1000));
 		}
 	}
 
@@ -63,7 +64,8 @@ public class PhysicsThread extends Thread {
 					System.out.println("P1 Block: " + me.getVector());
 					ball.getVector().setDx(-1 * ball.getVector().getDx());
 					ball.getVector().add(me.getVector());
-					networkEngine.reportReflect(ball.getX(), ball.getY(), ball.getVector().getDx(), ball.getVector().getDy());
+					networkEngine.reportReflect(ball.getX(), ball.getY(), ball.getVector().getDx(),
+							ball.getVector().getDy());
 					System.out.println("Ball: " + ball.getVector());
 					System.out.println("P1 Block:" + me.getVector());
 					this.exitRounds = 2;
@@ -81,11 +83,13 @@ public class PhysicsThread extends Thread {
 	}
 
 	private boolean checkWall(Ball ball) {
-		if (ball.getX() < 0 && ball.getVector().getDx() < 0 || ball.getX() > this.game.getWidth() - ball.getR() * 2 && ball.getVector().getDx() > 0) {
+		if (ball.getX() < 0 && ball.getVector().getDx() < 0
+				|| ball.getX() > this.game.getWidth() - ball.getR() * 2 && ball.getVector().getDx() > 0) {
 			ball.getVector().setDx(-1 * ball.getVector().getDx());
 			ball.getVector().setTimestamp(System.currentTimeMillis());
 			return true;
-		} else if (ball.getY() < 0 && ball.getVector().getDy() < 0 || ball.getY() > this.game.getHeight() - ball.getR() * 2 && ball.getVector().getDy() > 0) {
+		} else if (ball.getY() < 0 && ball.getVector().getDy() < 0
+				|| ball.getY() > this.game.getHeight() - ball.getR() * 2 && ball.getVector().getDy() > 0) {
 			ball.getVector().setDy(-1 * ball.getVector().getDy());
 			ball.getVector().setTimestamp(System.currentTimeMillis());
 
@@ -93,4 +97,13 @@ public class PhysicsThread extends Thread {
 		}
 		return false;
 	}
+
+	public int getPps() {
+		return pps;
+	}
+
+	public void setPps(int pps) {
+		this.pps = pps;
+	}
+
 }

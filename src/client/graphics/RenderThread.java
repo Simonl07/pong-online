@@ -7,17 +7,17 @@ import client.util.AverageRateOfChangeQueue;
 
 public class RenderThread extends Thread {
 
-	private Game game;
 	private JPanel graphicsComponent;
 	private int targetDelay;
 	private AverageRateOfChangeQueue<Integer> arocq;
 	private static final int MAXIMUM_FPS_SUPPORTED = 200;
+	private int fps;
 
-	public RenderThread(Game game, JPanel graphicsComponent, int targetFPS) {
-		this.game = game;
+	public RenderThread(JPanel graphicsComponent, int targetFPS) {
 		this.graphicsComponent = graphicsComponent;
 		this.targetDelay = FPS2Delay(targetFPS);
 		this.arocq = new AverageRateOfChangeQueue<>(MAXIMUM_FPS_SUPPORTED);
+		this.fps = 0;
 
 	}
 
@@ -42,7 +42,16 @@ public class RenderThread extends Thread {
 					}
 				}
 			}
-			this.game.setFps(arocq.getEntryFrequency(1000));
+			this.setFps(arocq.getEntryFrequency(1000));
 		}
 	}
+
+	public int getFps() {
+		return fps;
+	}
+
+	public void setFps(int fps) {
+		this.fps = fps;
+	}
+
 }

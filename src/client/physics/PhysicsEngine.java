@@ -30,4 +30,8 @@ public class PhysicsEngine {
 		this.targetPPS = targetPPS;
 	}
 
+	public int getPPS() {
+		return this.physicsThread.getPps();
+	}
+
 }

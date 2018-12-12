@@ -12,8 +12,6 @@ public class Game {
 	private int height;
 	private int scoreP1;
 	private int scoreP2;
-	private int pps;
-	private int fps;
 	private long syncTimeDisplay;
 
 	public Game(int width, int height) {
@@ -24,8 +22,6 @@ public class Game {
 		this.ball = new Ball();
 		this.scoreP1 = 0;
 		this.scoreP2 = 0;
-		this.pps = 0;
-		this.fps = 0;
 		initBoard();
 	}
 
@@ -63,7 +59,6 @@ public class Game {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-	
 
 	/**
 	 * @param height the height to set
@@ -98,34 +93,6 @@ public class Game {
 	 */
 	public void setScoreP2(int scoreP2) {
 		this.scoreP2 = scoreP2;
-	}
-
-	/**
-	 * @return the pps
-	 */
-	public int getPps() {
-		return pps;
-	}
-
-	/**
-	 * @return the fps
-	 */
-	public int getFps() {
-		return fps;
-	}
-
-	/**
-	 * @param pps the pps to set
-	 */
-	public void setPps(int pps) {
-		this.pps = pps;
-	}
-
-	/**
-	 * @param fps the fps to set
-	 */
-	public void setFps(int fps) {
-		this.fps = fps;
 	}
 
 	/**
