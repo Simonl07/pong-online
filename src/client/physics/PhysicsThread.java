@@ -74,6 +74,7 @@ public class PhysicsThread extends Thread {
 					exitRounds--;
 				}
 			}
+
 			ball.update(System.currentTimeMillis());
 		}
 	}
@@ -85,7 +86,7 @@ public class PhysicsThread extends Thread {
 	private boolean checkWall(Ball ball) {
 		if (ball.getX() < 0 && ball.getVector().getDx() < 0
 				|| ball.getX() > this.game.getWidth() - ball.getR() * 2 && ball.getVector().getDx() > 0) {
-
+			this.networkEngine.reportRoundEnd();
 			return false;
 		} else if (ball.getY() < 0 && ball.getVector().getDy() < 0
 				|| ball.getY() > this.game.getHeight() - ball.getR() * 2 && ball.getVector().getDy() > 0) {
