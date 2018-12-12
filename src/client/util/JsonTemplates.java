@@ -30,4 +30,10 @@ public final class JsonTemplates {
 		return json;
 	}
 
+	public static JsonObject IG_CLIENT_END_ROUND() {
+		JsonObject json = new JsonObject();
+		json.addProperty("type", "ig_client_end_round");
+		return json;
+	}
+
 }

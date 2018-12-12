@@ -80,12 +80,6 @@ public class NetworkEngine {
 		}
 
 		this.connector.startServer(localPort);
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		this.connector.startClient(host, port);
 		this.setPeerConnected(true);
 	}

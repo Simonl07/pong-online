@@ -85,9 +85,8 @@ public class PhysicsThread extends Thread {
 	private boolean checkWall(Ball ball) {
 		if (ball.getX() < 0 && ball.getVector().getDx() < 0
 				|| ball.getX() > this.game.getWidth() - ball.getR() * 2 && ball.getVector().getDx() > 0) {
-			ball.getVector().setDx(-1 * ball.getVector().getDx());
-			ball.getVector().setTimestamp(System.currentTimeMillis());
-			return true;
+
+			return false;
 		} else if (ball.getY() < 0 && ball.getVector().getDy() < 0
 				|| ball.getY() > this.game.getHeight() - ball.getR() * 2 && ball.getVector().getDy() > 0) {
 			ball.getVector().setDy(-1 * ball.getVector().getDy());

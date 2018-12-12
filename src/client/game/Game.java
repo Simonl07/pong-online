@@ -17,8 +17,8 @@ public class Game {
 	public Game(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.left = new Block(30);
-		this.right = new Block(this.width - Block.DEFAULT_WIDTH - 30);
+		this.left = new Block(50);
+		this.right = new Block(this.width - Block.DEFAULT_WIDTH - 50);
 		this.ball = new Ball();
 		this.scoreP1 = 0;
 		this.scoreP2 = 0;
