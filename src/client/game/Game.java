@@ -63,6 +63,7 @@ public class Game {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+	
 
 	/**
 	 * @param height the height to set
