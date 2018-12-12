@@ -162,8 +162,7 @@ public class NetworkEngine {
 		synchronized (this.game.getBall()) {
 			this.game.getBall().setX(x + dx * delayAdjusted);
 			this.game.getBall().setY(y + dy * delayAdjusted);
-			this.game.getBall().getVector().setDx(dx);
-			this.game.getBall().getVector().setDx(dy);
+			this.game.getBall().addVector(new Vector(dx, dy));
 			this.game.setScoreP1(gamestart.get("left").getAsInt());
 			this.game.setScoreP2(gamestart.get("right").getAsInt());
 		}
