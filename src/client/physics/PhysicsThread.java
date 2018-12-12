@@ -74,7 +74,6 @@ public class PhysicsThread extends Thread {
 					exitRounds--;
 				}
 			}
-
 			ball.update(System.currentTimeMillis());
 		}
 	}

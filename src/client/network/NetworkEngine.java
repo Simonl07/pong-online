@@ -38,6 +38,7 @@ public class NetworkEngine {
 
 		writer.write(JsonTemplates.MM_CLIENT_HELLO(PeerConnector.DEFAULT_LOCAL_PORT));
 
+		this.waitForStart();
 	}
 
 	public void waitForStart() {
