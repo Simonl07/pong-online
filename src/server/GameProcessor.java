@@ -85,7 +85,7 @@ public class GameProcessor implements Runnable {
 	private static void initGame(JsonObject json) {
 		// TODO generate game information
 		JsonObject iv = new JsonObject();
-		iv.addProperty("x", 40);
+		iv.addProperty("x", 500);
 		iv.addProperty("y", 120);
 		iv.addProperty("dx", -0.05);
 		iv.addProperty("dy", 0);
