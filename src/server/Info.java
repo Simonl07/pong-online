@@ -44,17 +44,22 @@ public class Info {
 
 	private static void initGame(JsonObject json, int left, int right) {
 		JsonObject iv = new JsonObject();
-		iv.addProperty("x", 500);
-		iv.addProperty("y", 120);
-		iv.addProperty("dx", -0.15);
-		iv.addProperty("dy", 0);
+		iv.addProperty("x", generatePosition(400, 600));
+		iv.addProperty("y", generatePosition(200, 400));
+		iv.addProperty("dx", (-1) * generateSpeed(0.1, 0.2));
+		iv.addProperty("dy", generateSpeed(0, 0.2));
 		json.add("iv", iv);
 		json.addProperty("left", left);
 		json.addProperty("right", right);
 	}
 	
-	private static float generateRandom(float low, float high) {
-		return 0;
+	private static int generatePosition(int low, int high) {
+		return (int) (Math.random() * (high - low) + low);
 	}
+	
+	private static double generateSpeed(double low, double high) {
+		return Math.random() * (high - low) + low;
+	}
+
 
 }
