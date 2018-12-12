@@ -91,8 +91,9 @@ public class NetworkEngine {
 			json = JsonTemplates.IG_CLIENT_REFLECT(x, y, dx, dy, System.currentTimeMillis() + this.getClockOffset());
 		} else {
 			json = JsonTemplates.IG_CLIENT_REFLECT(x, y, dx, dy, System.currentTimeMillis());
-
 		}
+		System.out.println("BOOM!\n" + json.toString());
+		writer.write(json);
 	}
 
 	/**
