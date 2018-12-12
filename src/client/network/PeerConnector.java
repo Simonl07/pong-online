@@ -3,15 +3,10 @@ package client.network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.google.gson.JsonObject;
-
 import client.game.Game;
-import utils.JsonSocketReader;
-import utils.JsonSocketWriter;
 
 public class PeerConnector {
 
