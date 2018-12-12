@@ -84,7 +84,7 @@ public class NetworkEngine {
 		this.setPeerConnected(true);
 	}
 
-	public void reportReflect(int x, int y, int dx, int dy) {
+	public void reportReflect(int x, int y, double dx, double dy) {
 		JsonSocketWriter writer = new JsonSocketWriter(this.gameSocket);
 		JsonObject json;
 		if (this.game.isLeft()) {
