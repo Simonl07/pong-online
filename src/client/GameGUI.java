@@ -29,7 +29,7 @@ public class GameGUI extends JFrame {
 		Game g = new Game(1000, 600);
 
 		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.34.220", 8000);
-		PhysicsEngine physicsEngine = new PhysicsEngine(g, 120);
+		PhysicsEngine physicsEngine = new PhysicsEngine(g, networkEngine, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, networkEngine, 60);
 		try {
 			networkEngine.findMatch();
