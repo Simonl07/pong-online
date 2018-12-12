@@ -31,26 +31,26 @@ public class Info {
 	}
 	
 	public static JsonObject MM_SERVER_START(String opp_host, int opp_port, long session_id, int left, int right,
-			boolean isLeft) {
+			boolean isLeft, JsonObject iv) {
 		JsonObject json = new JsonObject();
 		json.addProperty(TYPE, MM_SERVER_START_TYPE);
 		json.addProperty(OPP_HOST, opp_host);
 		json.addProperty(OPP_PORT, opp_port);
 		json.addProperty(SESSION_ID, session_id);
-		initGame(json, left, right);
+		json.add("iv", iv);
+		json.addProperty("left", left);
+		json.addProperty("right", right);
 		json.addProperty(YOU, (isLeft ? LEFT : RIGHT));
 		return json;
 	}
 
-	private static void initGame(JsonObject json, int left, int right) {
-		JsonObject iv = new JsonObject();
-		iv.addProperty("x", generatePosition(400, 600));
-		iv.addProperty("y", generatePosition(200, 400));
-		iv.addProperty("dx", (-1) * generateSpeed(0.1, 0.2));
-		iv.addProperty("dy", generateSpeed(0, 0.2));
-		json.add("iv", iv);
-		json.addProperty("left", left);
-		json.addProperty("right", right);
+	public static JsonObject initGame() {
+		JsonObject json = new JsonObject();
+		json.addProperty("x", generatePosition(400, 600));
+		json.addProperty("y", generatePosition(200, 400));
+		json.addProperty("dx", (-1) * generateSpeed(0.1, 0.2));
+		json.addProperty("dy", generateSpeed(0, 0.2));
+		return json;
 	}
 	
 	private static int generatePosition(int low, int high) {

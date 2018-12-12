@@ -24,8 +24,9 @@ public class GameProcessor implements Runnable {
 
 	private void notifyStart() {
 		// inform each other
-		JsonObject jsonLeft = generateStartInfo(true);
-		JsonObject jsonRight = generateStartInfo(false);
+		JsonObject iv = Info.initGame();
+		JsonObject jsonLeft = generateStartInfo(true, iv);
+		JsonObject jsonRight = generateStartInfo(false, iv);
 		this.startTime = System.currentTimeMillis() + 5000;
 		jsonLeft.addProperty("start", startTime);
 		jsonRight.addProperty("start", startTime);
@@ -75,11 +76,11 @@ public class GameProcessor implements Runnable {
 		this.notifyRight.write(score);
 	}
 
-	private JsonObject generateStartInfo(boolean isLeft) {
+	private JsonObject generateStartInfo(boolean isLeft, JsonObject iv) {
 		String opp_host = isLeft ? this.right.getHost() : this.left.getHost();
 		int opp_port = isLeft ? this.right.getPort() : this.left.getPort();
 		return Info.MM_SERVER_START(opp_host, opp_port, this.session_id, this.left.getScore(), this.right.getScore(),
-				isLeft);
+				isLeft, iv);
 	}
 
 }
