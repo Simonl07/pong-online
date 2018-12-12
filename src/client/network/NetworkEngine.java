@@ -135,6 +135,7 @@ public class NetworkEngine {
 		public void run() {
 			while (true) {
 				JsonObject reflect = reader.next();
+				System.out.println("RECEIVED: " + reflect);
 				if (reflect.get("type").getAsString().equals("ig_server_broadcast_reflect")) {
 					JsonObject v = reflect.get("v").getAsJsonObject();
 					double x = v.get("x").getAsDouble();
@@ -149,7 +150,7 @@ public class NetworkEngine {
 						game.getBall().getVector().setDy(dy);
 						long timestamp = reflect.get("start").getAsLong();
 						if (game.isLeft()) {
-							timestamp = reflect.get("start").getAsLong() + clockOffset;
+							timestamp = reflect.get("start").getAsLong() - clockOffset;
 						}
 						game.getBall().getVector().setTimestamp(timestamp);
 					}
