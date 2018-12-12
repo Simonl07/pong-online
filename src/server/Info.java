@@ -43,15 +43,18 @@ public class Info {
 	}
 
 	private static void initGame(JsonObject json, int left, int right) {
-		// TODO generate game information
 		JsonObject iv = new JsonObject();
 		iv.addProperty("x", 500);
 		iv.addProperty("y", 120);
 		iv.addProperty("dx", -0.15);
 		iv.addProperty("dy", 0);
 		json.add("iv", iv);
-		json.addProperty("left", 0);
-		json.addProperty("right", 0);
+		json.addProperty("left", left);
+		json.addProperty("right", right);
+	}
+	
+	private static float generateRandom(float low, float high) {
+		return 0;
 	}
 
 }
