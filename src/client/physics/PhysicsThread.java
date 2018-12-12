@@ -68,7 +68,7 @@ public class PhysicsThread extends Thread {
 							ball.getVector().getDy());
 					System.out.println("Ball: " + ball.getVector());
 					System.out.println("P1 Block:" + me.getVector());
-					this.exitRounds = 2;
+					this.exitRounds = 5;
 				}
 				if (exitRounds != 0) {
 					exitRounds--;

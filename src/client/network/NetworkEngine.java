@@ -147,12 +147,14 @@ public class NetworkEngine {
 						game.getBall().setY(y);
 						game.getBall().getVector().setDx(dx);
 						game.getBall().getVector().setDy(dy);
-						game.getBall().getVector().setTimestamp(reflect.get("start").getAsLong());
+						long timestamp = reflect.get("start").getAsLong();
+						if (game.isLeft()) {
+							timestamp = reflect.get("start").getAsLong() + clockOffset;
+						}
+						game.getBall().getVector().setTimestamp(timestamp);
 					}
 				}
 			}
 		}
-
 	}
-
 }
