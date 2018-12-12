@@ -26,20 +26,26 @@ public class GameProcessor implements Runnable {
 		this.startTime = System.currentTimeMillis() + 5000;
 		jsonLeft.addProperty("start", startTime);
 		jsonRight.addProperty("start", startTime);
-		new JsonSocketWriter(left.getSocket()).write(jsonLeft);
-		new JsonSocketWriter(right.getSocket()).write(jsonRight);
 
 		// listen to each other
-		JsonSocketReader listenerLeft = new JsonSocketReader(left.getSocket());
-		JsonSocketReader listenerRight = new JsonSocketReader(right.getSocket());
-		JsonSocketWriter notifyLeft = new JsonSocketWriter(left.getSocket());
-		JsonSocketWriter notifyRight = new JsonSocketWriter(right.getSocket());
+		JsonSocketReader listenerLeft = left.getReader();
+		JsonSocketReader listenerRight = right.getReader();
+		JsonSocketWriter notifyLeft = left.getWriter();
+		JsonSocketWriter notifyRight = left.getWriter();
+
+		notifyLeft.write(jsonLeft);
+		notifyRight.write(jsonRight);
+
 		boolean isLeft = true;
-		JsonObject json = listenerLeft.next();
+		JsonObject json;
 		String type;
+		System.out.println("here!");
+		System.out.flush();
 		while ((json = listenerLeft.next()) != null
 				&& !(type = json.get(Info.TYPE).getAsString()).equals(Info.IG_CLIENT_END_GAME_TYPE)) {
 			isLeft = !isLeft;
+			System.out.println("type -- " + type);
+			System.out.flush();
 			switch (type) {
 			case Info.IG_CLIENT_END_ROUND_TYPE:
 				if (isLeft) {
@@ -53,8 +59,12 @@ public class GameProcessor implements Runnable {
 				json.addProperty(Info.TYPE, Info.IG_SERVER_BROADCAST_REFLECT_TYPE);
 				if (isLeft) {
 					notifyLeft.write(json);
+					System.out.println("left: " + json.toString());
+					System.out.flush();
 				} else {
 					notifyRight.write(json);
+					System.out.println("right: " + json.toString());
+					System.out.flush();
 				}
 			}
 			json = isLeft ? listenerLeft.next() : listenerRight.next();
@@ -80,14 +90,12 @@ public class GameProcessor implements Runnable {
 		return json;
 	}
 
-	
-	
 	private static void initGame(JsonObject json) {
 		// TODO generate game information
 		JsonObject iv = new JsonObject();
 		iv.addProperty("x", 500);
 		iv.addProperty("y", 120);
-		iv.addProperty("dx", -0.05);
+		iv.addProperty("dx", -0.15);
 		iv.addProperty("dy", 0);
 
 		json.add("iv", iv);

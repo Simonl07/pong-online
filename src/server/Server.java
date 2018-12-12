@@ -35,7 +35,7 @@ public class Server {
 				}
 				// generate player, start listening
 				PlayerInfo player = new PlayerInfo(socket);
-				JsonSocketReader listener = new JsonSocketReader(socket);
+				JsonSocketReader listener = player.getReader();
 				JsonObject json;
 				while (!shutdown && (json = listener.next()) != null) {// TODO add end game condition
 					handleRequest(json, player);
@@ -55,7 +55,6 @@ public class Server {
 	
 	private void handleRequest(JsonObject json, PlayerInfo player) {
 		String request = json.get(Info.TYPE).getAsString();
-		System.out.println(json.toString());
 		switch(request) {
 		case Info.MM_CLIENT_HELLO_TYPE:
 			// wait for match making

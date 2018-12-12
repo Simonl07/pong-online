@@ -2,11 +2,16 @@ package server;
 
 import java.net.Socket;
 
+import utils.JsonSocketReader;
+import utils.JsonSocketWriter;
+
 public class PlayerInfo {
 	private int score;
 	private String host;
 	private int port;
 	private Socket socket;
+	private JsonSocketReader reader;
+	private JsonSocketWriter writer;
 	
 	public PlayerInfo(Socket socket) {
 		this(0, socket);
@@ -15,8 +20,16 @@ public class PlayerInfo {
 		this.score = score;
 		this.host = socket.getInetAddress().getHostAddress();
 		this.socket = socket;
+		this.reader = new JsonSocketReader(socket);
+		this.writer = new JsonSocketWriter(socket);
 	}
 	
+	public JsonSocketReader getReader() {
+		return this.reader;
+	}
+	public JsonSocketWriter getWriter() {
+		return this.writer;
+	}
 	public void setPort(int port) {
 		this.port = port;
 	}

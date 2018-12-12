@@ -26,9 +26,7 @@ public class JsonSocketReader {
 	
 	public JsonObject next(){
 		try {
-			String a = readNextMessage();
-			System.out.println("|" + a + "|");
-			JsonElement json = parser.parse(a);
+			JsonElement json = parser.parse(readNextMessage());
 			if (json != null) {
 				return json.getAsJsonObject();
 			}
