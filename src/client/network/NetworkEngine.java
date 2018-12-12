@@ -39,6 +39,8 @@ public class NetworkEngine {
 		writer.write(JsonTemplates.MM_CLIENT_HELLO(PeerConnector.DEFAULT_LOCAL_PORT));
 
 		this.waitForStart();
+		this.serverMonitor = new ServerResponseMonitor();
+		this.serverMonitor.start();
 	}
 
 	public void waitForStart() {
@@ -62,8 +64,7 @@ public class NetworkEngine {
 		this.game.getBall().addVector(new Vector(dx, dy));
 		this.game.setScoreP1(gamestart.get("left").getAsInt());
 		this.game.setScoreP2(gamestart.get("right").getAsInt());
-		this.serverMonitor = new ServerResponseMonitor();
-		this.serverMonitor.start();
+		this.game.setActive(true);
 	}
 
 	public void connectPeer(String host, int port, int localPort, boolean isLeft) {
@@ -183,5 +184,6 @@ public class NetworkEngine {
 			this.game.setScoreP1(gamestart.get("left").getAsInt());
 			this.game.setScoreP2(gamestart.get("right").getAsInt());
 		}
+		this.game.setActive(true);
 	}
 }

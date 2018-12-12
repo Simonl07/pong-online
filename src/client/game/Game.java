@@ -13,6 +13,7 @@ public class Game {
 	private int scoreP1;
 	private int scoreP2;
 	private long syncTimeDisplay;
+	private boolean isActive;
 
 	public Game(int width, int height) {
 		this.width = width;
@@ -133,6 +134,14 @@ public class Game {
 
 	public void updateMouse(MouseEvent e) {
 		this.getMe().update(e);
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
