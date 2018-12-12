@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JPanel;
+
 import client.game.Ball;
 import client.game.Block;
 import client.game.Game;
@@ -16,7 +18,6 @@ import client.physics.PhysicsEngine;
 public class GraphicsEngine {
 
 	private Game game;
-	private GraphicsComponent graphicsComponent;
 	private PhysicsEngine physicsEngine;
 	private NetworkEngine networkEngine;
 	private RenderThread renderer;
@@ -41,21 +42,16 @@ public class GraphicsEngine {
 		}
 	}
 
-	public GraphicsEngine(Game game, PhysicsEngine physicsEngine, NetworkEngine networkEngine, int targetFPS) {
+	public GraphicsEngine(Game game, JPanel graphicsComponent, PhysicsEngine physicsEngine, NetworkEngine networkEngine, int targetFPS) {
 		this.game = game;
 		this.gameWidth = game.getWidth();
 		this.gameHeight = game.getHeight();
-		this.graphicsComponent = new GraphicsComponent(this.game, this);
 		this.physicsEngine = physicsEngine;
 		this.networkEngine = networkEngine;
 		this.targetFPS = targetFPS;
-		this.renderer = new RenderThread(this.game, this.graphicsComponent, this.targetFPS);
+		this.renderer = new RenderThread(this.game, graphicsComponent, this.targetFPS);
 		this.stage = GRAPHICS_STAGE.INGAME;
 		this.renderer.start();
-	}
-
-	public GraphicsComponent getGraphicsComponent() {
-		return this.graphicsComponent;
 	}
 
 	public void paintGraphics(Graphics g) {
@@ -73,11 +69,11 @@ public class GraphicsEngine {
 	}
 
 	private void paintEnd(Graphics g) {
-		
+
 	}
 
 	private void paintMenu(Graphics g) {
-		
+
 	}
 
 	public void paintGame(Graphics g) {

@@ -1,16 +1,5 @@
 package server;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
-import com.google.gson.JsonObject;
-
-import utils.JsonSocketReader;
-import utils.JsonSocketWriter;
-
 public class test {
 
 //	static class Con implements Runnable {

@@ -12,13 +12,13 @@ import client.network.NetworkEngine;
 import client.physics.PhysicsEngine;
 
 @SuppressWarnings("serial")
-public class GameGUI extends JFrame {
+public class GUI extends JFrame {
 
 	private String remoteHost;
 	private int remotePort;
 	private int localPort;
 
-	public GameGUI(String remoteHost, int remotePort, int localPort) {
+	public GUI(String remoteHost, int remotePort, int localPort) {
 		this.remoteHost = remoteHost;
 		this.remotePort = remotePort;
 		this.localPort = localPort;
@@ -27,7 +27,6 @@ public class GameGUI extends JFrame {
 
 	private void initUI() {
 		Game g = new Game(1000, 600);
-
 		NetworkEngine networkEngine = new NetworkEngine(g, "10.1.34.220", 8000);
 		PhysicsEngine physicsEngine = new PhysicsEngine(g, networkEngine, 120);
 		GraphicsEngine graphicsEngine = new GraphicsEngine(g, physicsEngine, networkEngine, 60);
@@ -40,9 +39,10 @@ public class GameGUI extends JFrame {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		this.add(graphicsEngine.getGraphicsComponent());
 		networkEngine.connectPeer("localhost", 8889, 8888, true);
 
-		this.add(graphicsEngine.getGraphicsComponent());
+		
 		this.setTitle("pong-client");
 		this.setSize(1000, 620);
 
@@ -59,7 +59,7 @@ public class GameGUI extends JFrame {
 		int localPort = Integer.parseInt(args[2]);
 
 		EventQueue.invokeLater(() -> {
-			GameGUI ex = new GameGUI(remotehost, remotePort, localPort);
+			GUI ex = new GUI(remotehost, remotePort, localPort);
 			ex.setVisible(true);
 		});
 	}
