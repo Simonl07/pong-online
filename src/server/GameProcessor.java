@@ -31,21 +31,21 @@ public class GameProcessor implements Runnable {
 		JsonSocketReader listenerLeft = left.getReader();
 		JsonSocketReader listenerRight = right.getReader();
 		JsonSocketWriter notifyLeft = left.getWriter();
-		JsonSocketWriter notifyRight = left.getWriter();
+		JsonSocketWriter notifyRight = right.getWriter();
 
 		notifyLeft.write(jsonLeft);
 		notifyRight.write(jsonRight);
 
 		boolean isLeft = true;
-		JsonObject json;
+		JsonObject json = listenerLeft.next();
 		String type;
 		System.out.println("here!");
 		System.out.flush();
-		while ((json = listenerLeft.next()) != null
+		while (json != null
 				&& !(type = json.get(Info.TYPE).getAsString()).equals(Info.IG_CLIENT_END_GAME_TYPE)) {
-			isLeft = !isLeft;
 			System.out.println("type -- " + type);
 			System.out.flush();
+			isLeft = !isLeft;
 			switch (type) {
 			case Info.IG_CLIENT_END_ROUND_TYPE:
 				if (isLeft) {

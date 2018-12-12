@@ -14,8 +14,8 @@ public class JsonSocketReader {
 	final static String EOT = JsonSocketWriter.EOT;
 	private static final JsonParser parser = new JsonParser();
 	private BufferedReader reader;
-	
-	public JsonSocketReader(Socket socket){
+
+	public JsonSocketReader(Socket socket) {
 		try {
 			this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (IOException e) {
@@ -23,11 +23,10 @@ public class JsonSocketReader {
 		}
 	}
 
-	
-	public JsonObject next(){
+	public JsonObject next() {
 		try {
 			JsonElement json = parser.parse(readNextMessage());
-			if (json != null) {
+			if (json != null && !json.equals("")) {
 				return json.getAsJsonObject();
 			}
 			return null;
@@ -35,23 +34,23 @@ public class JsonSocketReader {
 			return null;
 		}
 	}
-	
-	
+
 	private String readNextMessage() throws IOException {
 		String message = "";
-				
-		String line = reader.readLine();
-		while (line != null && !line.trim().equals(EOT)) {
-			message += line + "\n";
-			line = reader.readLine();
+		while (message.equals("")) {
+			String line = reader.readLine();
+			while (line != null && !line.trim().equals(EOT)) {
+				message += line + "\n";
+				line = reader.readLine();
+			}
 		}
-//		System.out.println(message);
+		// System.out.println(message);
 		return message;
 	}
-	
 
 	/**
-	 * @param socket the socket to set
+	 * @param socket
+	 *            the socket to set
 	 */
 	public void setSocket(Socket socket) {
 		try {
@@ -60,6 +59,5 @@ public class JsonSocketReader {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 }
