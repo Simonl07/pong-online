@@ -22,6 +22,14 @@ public class Info {
 	public static final String IG_SERVER_BROADCAST_REFLECT_TYPE = "ig_server_broadcast_reflect";
 	public static final String IG_SERVER_END_GAME_TYPE = "ig_server_end_game";
 
+	public static JsonObject IG_SERVER_END_GAME(int left, int right) {
+		JsonObject json = new JsonObject();
+		json.addProperty(Info.TYPE, IG_SERVER_END_GAME_TYPE);
+		json.addProperty(Info.LEFT, left);
+		json.addProperty(Info.RIGHT, right);
+		return json;
+	}
+	
 	public static JsonObject MM_SERVER_START(String opp_host, int opp_port, long session_id, int left, int right,
 			boolean isLeft) {
 		JsonObject json = new JsonObject();

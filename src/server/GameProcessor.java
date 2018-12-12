@@ -11,6 +11,10 @@ public class GameProcessor implements Runnable {
 	private PlayerInfo left;
 	private PlayerInfo right;
 	private long startTime;
+	private JsonSocketReader listenerLeft;
+	private JsonSocketReader listenerRight;
+	private JsonSocketWriter notifyLeft;
+	private JsonSocketWriter notifyRight;
 
 	public GameProcessor(PlayerInfo left, PlayerInfo right) {
 		this.left = left;
@@ -18,28 +22,27 @@ public class GameProcessor implements Runnable {
 		this.session_id = left.hashCode() + right.hashCode() + System.currentTimeMillis();
 	}
 
-	private void notifyStart(JsonSocketWriter notifyLeft, JsonSocketWriter notifyRight) {
+	private void notifyStart() {
 		// inform each other
 		JsonObject jsonLeft = generateStartInfo(true);
 		JsonObject jsonRight = generateStartInfo(false);
 		this.startTime = System.currentTimeMillis() + 5000;
 		jsonLeft.addProperty("start", startTime);
 		jsonRight.addProperty("start", startTime);
-		
-		notifyLeft.write(jsonLeft);
-		notifyRight.write(jsonRight);
+
+		this.notifyLeft.write(jsonLeft);
+		this.notifyRight.write(jsonRight);
 	}
 
 	@Override
 	public void run() {
-
 		// listen to each other
-		JsonSocketReader listenerLeft = left.getReader();
-		JsonSocketReader listenerRight = right.getReader();
-		JsonSocketWriter notifyLeft = left.getWriter();
-		JsonSocketWriter notifyRight = right.getWriter();
+		this.listenerLeft = left.getReader();
+		this.listenerRight = right.getReader();
+		this.notifyLeft = left.getWriter();
+		this.notifyRight = right.getWriter();
 
-		this.notifyStart(notifyLeft, notifyRight);
+		this.notifyStart();
 
 		boolean isLeft = true;
 		JsonObject json = listenerLeft.next();
@@ -47,8 +50,6 @@ public class GameProcessor implements Runnable {
 		System.out.println("here!");
 		System.out.flush();
 		while (json != null && !(type = json.get(Info.TYPE).getAsString()).equals(Info.IG_CLIENT_END_GAME_TYPE)) {
-			System.out.println("type -- " + type);
-			System.out.flush();
 			isLeft = !isLeft;
 			switch (type) {
 			case Info.IG_CLIENT_END_ROUND_TYPE:
@@ -57,30 +58,23 @@ public class GameProcessor implements Runnable {
 				} else {
 					this.left.win();
 				}
-				this.notifyStart(notifyLeft, notifyRight);
+				this.notifyStart();
 				break;
 			case Info.IG_CLIENT_REFLECT_TYPE:
 				json.remove(Info.TYPE);
 				json.addProperty(Info.TYPE, Info.IG_SERVER_BROADCAST_REFLECT_TYPE);
 				if (isLeft) {
-					notifyLeft.write(json);
-					System.out.println("left: " + json.toString());
-					System.out.flush();
+					this.notifyLeft.write(json);
 				} else {
-					notifyRight.write(json);
-					System.out.println("right: " + json.toString());
-					System.out.flush();
+					this.notifyRight.write(json);
 				}
 			}
 			json = isLeft ? listenerLeft.next() : listenerRight.next();
 		}
 		// end game
-		JsonObject score = new JsonObject();
-		score.addProperty(Info.TYPE, Info.IG_SERVER_END_GAME_TYPE);
-		score.addProperty(Info.LEFT, left.getScore());
-		score.addProperty(Info.RIGHT, right.getScore());
-		notifyLeft.write(json);
-		notifyRight.write(json);
+		JsonObject score = Info.IG_SERVER_END_GAME(left.getScore(), right.getScore());
+		this.notifyLeft.write(score);
+		this.notifyRight.write(score);
 	}
 
 	private JsonObject generateStartInfo(boolean isLeft) {
