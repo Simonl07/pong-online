@@ -95,14 +95,14 @@ public class NetworkEngine {
 		} else {
 			json = JsonTemplates.IG_CLIENT_REFLECT(x, y, dx, dy, System.currentTimeMillis());
 		}
-		System.out.println("BOOM!\n" + json.toString());
+		System.out.println("SENT" + json.toString());
 		this.writer.write(json);
 	}
 
 	public void reportRoundEnd() {
 		JsonObject json = JsonTemplates.IG_CLIENT_END_ROUND();
+		System.out.println("SENT" + json.toString());
 		this.writer.write(json);
-		this.waitForStart();
 	}
 
 	/**
@@ -160,8 +160,33 @@ public class NetworkEngine {
 					}
 				} else if (reflect.get("type").getAsString().equals("ig_server_end_round")) {
 					waitForStart();
+				} else if (reflect.get("type").getAsString().equals("mm_server_start")) {
+					setupGame(reflect);
 				}
 			}
 		}
+	}
+
+	public void setupGame(JsonObject gamestart) {
+		this.game.setLeft(gamestart.get("you").getAsString().equals("left"));
+		String oppHost = gamestart.get("opp_host").getAsString();
+		int oppPort = gamestart.get("opp_port").getAsInt();
+		this.connectPeer(oppHost, oppPort, PeerConnector.DEFAULT_LOCAL_PORT, this.game.isLeft());
+
+		JsonObject iv = gamestart.get("iv").getAsJsonObject();
+		double x = iv.get("x").getAsDouble();
+		double y = iv.get("y").getAsDouble();
+		double dx = iv.get("dx").getAsDouble();
+		double dy = iv.get("dy").getAsDouble();
+		long delay = System.currentTimeMillis() - gamestart.get("start").getAsLong();
+		long delayAdjusted = this.game.isLeft() ? delay + this.getClockOffset() : delay;
+		System.out.println(delayAdjusted + "|" + (x + dx * delayAdjusted));
+		this.game.getBall().setX(x + dx * delayAdjusted);
+		this.game.getBall().setY(y + dy * delayAdjusted);
+		this.game.getBall().addVector(new Vector(dx, dy));
+		this.game.setScoreP1(gamestart.get("left").getAsInt());
+		this.game.setScoreP2(gamestart.get("right").getAsInt());
+		this.serverMonitor = new ServerResponseMonitor();
+		this.serverMonitor.start();
 	}
 }
