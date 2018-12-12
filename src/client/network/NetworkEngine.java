@@ -168,11 +168,6 @@ public class NetworkEngine {
 	}
 
 	public void setupGame(JsonObject gamestart) {
-		this.game.setLeft(gamestart.get("you").getAsString().equals("left"));
-		String oppHost = gamestart.get("opp_host").getAsString();
-		int oppPort = gamestart.get("opp_port").getAsInt();
-		this.connectPeer(oppHost, oppPort, PeerConnector.DEFAULT_LOCAL_PORT, this.game.isLeft());
-
 		JsonObject iv = gamestart.get("iv").getAsJsonObject();
 		double x = iv.get("x").getAsDouble();
 		double y = iv.get("y").getAsDouble();
@@ -181,12 +176,12 @@ public class NetworkEngine {
 		long delay = System.currentTimeMillis() - gamestart.get("start").getAsLong();
 		long delayAdjusted = this.game.isLeft() ? delay + this.getClockOffset() : delay;
 		System.out.println(delayAdjusted + "|" + (x + dx * delayAdjusted));
-		this.game.getBall().setX(x + dx * delayAdjusted);
-		this.game.getBall().setY(y + dy * delayAdjusted);
-		this.game.getBall().addVector(new Vector(dx, dy));
-		this.game.setScoreP1(gamestart.get("left").getAsInt());
-		this.game.setScoreP2(gamestart.get("right").getAsInt());
-		this.serverMonitor = new ServerResponseMonitor();
-		this.serverMonitor.start();
+		synchronized (this.game.getBall()) {
+			this.game.getBall().setX(x + dx * delayAdjusted);
+			this.game.getBall().setY(y + dy * delayAdjusted);
+			this.game.getBall().addVector(new Vector(dx, dy));
+			this.game.setScoreP1(gamestart.get("left").getAsInt());
+			this.game.setScoreP2(gamestart.get("right").getAsInt());
+		}
 	}
 }
