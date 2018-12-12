@@ -18,14 +18,20 @@ public class GameProcessor implements Runnable {
 		this.session_id = left.hashCode() + right.hashCode() + System.currentTimeMillis();
 	}
 
-	@Override
-	public void run() {
+	private void notifyStart(JsonSocketWriter notifyLeft, JsonSocketWriter notifyRight) {
 		// inform each other
 		JsonObject jsonLeft = generateStartInfo(true);
 		JsonObject jsonRight = generateStartInfo(false);
 		this.startTime = System.currentTimeMillis() + 5000;
 		jsonLeft.addProperty("start", startTime);
 		jsonRight.addProperty("start", startTime);
+		
+		notifyLeft.write(jsonLeft);
+		notifyRight.write(jsonRight);
+	}
+
+	@Override
+	public void run() {
 
 		// listen to each other
 		JsonSocketReader listenerLeft = left.getReader();
@@ -33,16 +39,14 @@ public class GameProcessor implements Runnable {
 		JsonSocketWriter notifyLeft = left.getWriter();
 		JsonSocketWriter notifyRight = right.getWriter();
 
-		notifyLeft.write(jsonLeft);
-		notifyRight.write(jsonRight);
+		this.notifyStart(notifyLeft, notifyRight);
 
 		boolean isLeft = true;
 		JsonObject json = listenerLeft.next();
 		String type;
 		System.out.println("here!");
 		System.out.flush();
-		while (json != null
-				&& !(type = json.get(Info.TYPE).getAsString()).equals(Info.IG_CLIENT_END_GAME_TYPE)) {
+		while (json != null && !(type = json.get(Info.TYPE).getAsString()).equals(Info.IG_CLIENT_END_GAME_TYPE)) {
 			System.out.println("type -- " + type);
 			System.out.flush();
 			isLeft = !isLeft;
@@ -53,6 +57,7 @@ public class GameProcessor implements Runnable {
 				} else {
 					this.left.win();
 				}
+				this.notifyStart(notifyLeft, notifyRight);
 				break;
 			case Info.IG_CLIENT_REFLECT_TYPE:
 				json.remove(Info.TYPE);
@@ -79,28 +84,10 @@ public class GameProcessor implements Runnable {
 	}
 
 	private JsonObject generateStartInfo(boolean isLeft) {
-		JsonObject json = new JsonObject();
-		json.addProperty(Info.TYPE, Info.MM_SERVER_START_TYPE);
-		json.addProperty(Info.OPP_HOST, isLeft ? right.getHost() : left.getHost());
-		json.addProperty(Info.OPP_PORT, isLeft ? right.getPort() : left.getPort());
-		json.addProperty(Info.SESSION_ID, this.session_id);
-		initGame(json);
-		json.addProperty(Info.YOU, isLeft ? Info.LEFT : Info.RIGHT);
-		return json;
-	}
-
-	private static void initGame(JsonObject json) {
-		// TODO generate game information
-		JsonObject iv = new JsonObject();
-		iv.addProperty("x", 500);
-		iv.addProperty("y", 120);
-		iv.addProperty("dx", -0.15);
-		iv.addProperty("dy", 0);
-
-		json.add("iv", iv);
-
-		json.addProperty("score1", 0);
-		json.addProperty("score2", 0);
+		String opp_host = isLeft ? this.right.getHost() : this.left.getHost();
+		int opp_port = isLeft ? this.right.getPort() : this.left.getPort();
+		return Info.MM_SERVER_START(opp_host, opp_port, this.session_id, this.left.getScore(), this.right.getScore(),
+				isLeft);
 	}
 
 }
