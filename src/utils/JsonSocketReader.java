@@ -38,7 +38,6 @@ public class JsonSocketReader {
 	}
 
 	private String readNextMessage() throws IOException {
-		String message = "";
 		StringBuilder builder = new StringBuilder();
 		String line;
 		while (!(line = reader.readLine().trim()).equals(EOT)) {
@@ -54,8 +53,7 @@ public class JsonSocketReader {
 	}
 
 	/**
-	 * @param socket
-	 *            the socket to set
+	 * @param socket the socket to set
 	 */
 	public void setSocket(Socket socket) {
 		try {

@@ -1,22 +1,23 @@
 package client.graphics;
 
+import javax.swing.JPanel;
+
 import client.game.Game;
 import client.util.AverageRateOfChangeQueue;
 
 public class RenderThread extends Thread {
 
-	private Game game;
-	private GraphicsComponent gameComponent;
+	private JPanel graphicsComponent;
 	private int targetDelay;
 	private AverageRateOfChangeQueue<Integer> arocq;
 	private static final int MAXIMUM_FPS_SUPPORTED = 200;
+	private int fps;
 
-
-	public RenderThread(Game game, GraphicsComponent gameComponent, int targetFPS) {
-		this.game = game;
-		this.gameComponent = gameComponent;
+	public RenderThread(JPanel graphicsComponent, int targetFPS) {
+		this.graphicsComponent = graphicsComponent;
 		this.targetDelay = FPS2Delay(targetFPS);
 		this.arocq = new AverageRateOfChangeQueue<>(MAXIMUM_FPS_SUPPORTED);
+		this.fps = 0;
 
 	}
 
@@ -29,7 +30,7 @@ public class RenderThread extends Thread {
 		long start, delay;
 		while (true) {
 			start = System.currentTimeMillis();
-			this.gameComponent.repaint();
+			this.graphicsComponent.repaint();
 			arocq.add(0);
 			if (this.targetDelay > 0) {
 				delay = this.targetDelay - (System.currentTimeMillis() - start);
@@ -41,7 +42,16 @@ public class RenderThread extends Thread {
 					}
 				}
 			}
-			this.game.setFps(arocq.getEntryFrequency(1000));
+			this.setFps(arocq.getEntryFrequency(1000));
 		}
 	}
+
+	public int getFps() {
+		return fps;
+	}
+
+	public void setFps(int fps) {
+		this.fps = fps;
+	}
+
 }
