@@ -47,9 +47,9 @@ public class Info {
 	public static JsonObject initGame() {
 		JsonObject json = new JsonObject();
 		json.addProperty("x", generatePosition(400, 600));
-		json.addProperty("y", generatePosition(200, 400));
-		json.addProperty("dx", (-1) * generateSpeed(0.1, 0.2));
-		json.addProperty("dy", generateSpeed(0, 0.2));
+		json.addProperty("y", generatePosition(250, 350));
+		json.addProperty("dx", (-1) * generateSpeed(0.08, 0.16));
+		json.addProperty("dy", generateSpeed(-0.15, 0.15));
 		return json;
 	}
 	
