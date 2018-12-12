@@ -37,34 +37,16 @@ public class NetworkEngine {
 		this.reader = new JsonSocketReader(socket);
 
 		writer.write(JsonTemplates.MM_CLIENT_HELLO(PeerConnector.DEFAULT_LOCAL_PORT));
-
-		this.waitForStart();
-		this.serverMonitor = new ServerResponseMonitor();
-		this.serverMonitor.start();
-	}
-
-	public void waitForStart() {
 		JsonObject gamestart = reader.next();
 		System.out.println(gamestart);
 		this.game.setLeft(gamestart.get("you").getAsString().equals("left"));
 		String oppHost = gamestart.get("opp_host").getAsString();
 		int oppPort = gamestart.get("opp_port").getAsInt();
 		this.connectPeer(oppHost, oppPort, PeerConnector.DEFAULT_LOCAL_PORT, this.game.isLeft());
-
-		JsonObject iv = gamestart.get("iv").getAsJsonObject();
-		double x = iv.get("x").getAsDouble();
-		double y = iv.get("y").getAsDouble();
-		double dx = iv.get("dx").getAsDouble();
-		double dy = iv.get("dy").getAsDouble();
-		long delay = System.currentTimeMillis() - gamestart.get("start").getAsLong();
-		long delayAdjusted = this.game.isLeft() ? delay + this.getClockOffset() : delay;
-		System.out.println(delayAdjusted + "|" + (x + dx * delayAdjusted));
-		this.game.getBall().setX(x + dx * delayAdjusted);
-		this.game.getBall().setY(y + dy * delayAdjusted);
-		this.game.getBall().addVector(new Vector(dx, dy));
-		this.game.setScoreP1(gamestart.get("left").getAsInt());
-		this.game.setScoreP2(gamestart.get("right").getAsInt());
-		this.game.setActive(true);
+		this.setupGame(gamestart);
+		;
+		this.serverMonitor = new ServerResponseMonitor();
+		this.serverMonitor.start();
 	}
 
 	public void connectPeer(String host, int port, int localPort, boolean isLeft) {
@@ -160,7 +142,7 @@ public class NetworkEngine {
 						game.getBall().getVector().setTimestamp(timestamp);
 					}
 				} else if (reflect.get("type").getAsString().equals("ig_server_end_round")) {
-					waitForStart();
+					game.setActive(false);
 				} else if (reflect.get("type").getAsString().equals("mm_server_start")) {
 					setupGame(reflect);
 				}
