@@ -64,6 +64,12 @@ public class NetworkEngine {
 
 	public void connectPeer(String host, int port, int localPort, boolean isLeft) {
 		if (isLeft) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			this.game.setLeft(isLeft);
 			long offset = ClockSynchronizer.syncAsLeft(host, port);
 			this.setClockOffset(offset);
