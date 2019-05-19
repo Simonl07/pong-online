@@ -1,7 +1,7 @@
 # pong-online
 Multiplayer pong game using sockets connection and java applet/2D graphics
 
-<img src="https://teachingkidstocode.io/wp-content/uploads/2017/08/Pong-1920x1200-31.jpg" width="384" height="240" />
+<img src="https://cdn2us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2018/01/pong_0.jpg?itok=LH7Nf7wJ" width="384" height="240" />
 
 
 ## Architecture
